@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "skills": "Skills",
+    "services": "Services",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "role": "Full-Stack Developer",
+    "name": "Shalev Shaul",
+    "tagline": "I build exceptional digital experiences at the intersection of design and engineering.",
+    "highlight": "exceptional",
+    "cta": "View Work",
+    "scrollHint": "Scroll to explore"
+  },
+  "about": {
+    "title": "About",
+    "subtitle": "The person behind the code.",
+    "body": "I'm a full-stack developer with a strong eye for design — I care as much about how things look as how they work. I specialise in building fast, accessible, and visually refined web applications.",
+    "resumeCta": "Download CV"
+  },
+  "skills": {
+    "title": "Skills",
+    "subtitle": "Tools and technologies I work with."
+  },
+  "services": {
+    "title": "Services",
+    "subtitle": "What I can do for you.",
+    "webDev": {
+      "title": "Web Development",
+      "description": "End-to-end web applications — from architecture to deployment. Clean code, modern stack, production-ready."
+    },
+    "uiDesign": {
+      "title": "UI/UX Design",
+      "description": "Interfaces that are beautiful, intuitive, and accessible. Design systems, prototypes, and pixel-perfect implementation."
+    },
+    "branding": {
+      "title": "Branding & Identity",
+      "description": "Visual identity systems — logos, colour palettes, typography, and brand guidelines that communicate the right story."
+    },
+    "consulting": {
+      "title": "Technical Consulting",
+      "description": "Architecture reviews, tech stack decisions, code audits, and hands-on mentoring for teams and founders."
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Selected work — built with care.",
+    "liveCta": "Live Site",
+    "githubCta": "Source",
+    "otherTitle": "More Projects",
+    "otherSubtitle": "Other things I've built."
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Have a project in mind? Let's build something great.",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "submit": "Send Message",
+    "sending": "Sending…",
+    "success": "Message sent! I'll get back to you soon.",
+    "error": "Something went wrong. Please try again.",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "your@email.com",
+    "messagePlaceholder": "Tell me about your project…"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Next.js"
+  },
+  "a11y": {
+    "themeToggle": "Toggle theme",
+    "langToggle": "Switch to Hebrew",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "skipToMain": "Skip to main content",
+    "heroCanvas": "Decorative 3D animation"
+  }
+}
