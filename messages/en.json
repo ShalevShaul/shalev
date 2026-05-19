@@ -11,7 +11,6 @@
     "role": "Full-Stack Developer",
     "name": "Shalev Shaul",
     "tagline": "I build exceptional digital experiences at the intersection of design and engineering.",
-    "highlight": "exceptional",
     "cta": "View Work",
     "scrollHint": "Scroll to explore"
   },
@@ -19,7 +18,13 @@
     "title": "About",
     "subtitle": "The person behind the code.",
     "body": "I'm a full-stack developer with a strong eye for design — I care as much about how things look as how they work. I specialise in building fast, accessible, and visually refined web applications.",
-    "resumeCta": "Download CV"
+    "resumeCta": "Download CV",
+    "stat1Value": "3+",
+    "stat1Label": "Years Experience",
+    "stat2Value": "20+",
+    "stat2Label": "Projects Shipped",
+    "stat3Value": "100%",
+    "stat3Label": "Client Satisfaction"
   },
   "skills": {
     "title": "Skills",
@@ -65,7 +70,10 @@
     "error": "Something went wrong. Please try again.",
     "namePlaceholder": "Your name",
     "emailPlaceholder": "your@email.com",
-    "messagePlaceholder": "Tell me about your project…"
+    "messagePlaceholder": "Tell me about your project…",
+    "nameError": "Please enter your name (min. 2 characters)",
+    "emailError": "Please enter a valid email address",
+    "messageError": "Please write a message (min. 10 characters)"
   },
   "footer": {
     "rights": "All rights reserved.",
@@ -77,6 +85,8 @@
     "openMenu": "Open navigation menu",
     "closeMenu": "Close navigation menu",
     "skipToMain": "Skip to main content",
-    "heroCanvas": "Decorative 3D animation"
+    "heroCanvas": "Decorative 3D animation",
+    "github": "GitHub profile",
+    "linkedin": "LinkedIn profile"
   }
 }

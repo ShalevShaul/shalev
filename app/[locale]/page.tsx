@@ -1,5 +1,13 @@
 import Navbar from '@/components/layout/Navbar'
 import GrainOverlay from '@/components/ui/GrainOverlay'
+import Hero from '@/components/sections/Hero'
+import About from '@/components/sections/About'
+import Skills from '@/components/sections/Skills'
+import Services from '@/components/sections/Services'
+import FeaturedProjects from '@/components/sections/FeaturedProjects'
+import OtherProjects from '@/components/sections/OtherProjects'
+import Contact from '@/components/sections/Contact'
+import Footer from '@/components/sections/Footer'
 
 export default function HomePage() {
   return (
@@ -12,11 +20,16 @@ export default function HomePage() {
       >
         Skip to main content
       </a>
-      <main id="main-content" className="pt-16">
-        <div className="mx-auto max-w-6xl px-4 py-32 lg:px-6">
-          <p className="text-text-muted text-sm">Phase 2 complete — sections coming in Phase 3.</p>
-        </div>
+      <main id="main-content">
+        <Hero />
+        <About />
+        <Skills />
+        <Services />
+        <FeaturedProjects />
+        <OtherProjects />
+        <Contact />
       </main>
+      <Footer />
     </>
   )
 }
