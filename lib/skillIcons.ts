@@ -1,0 +1,36 @@
+import {
+  siReact,
+  siNextdotjs,
+  siTypescript,
+  siTailwindcss,
+  siFramer,
+  siHtml5,
+  siCss,
+  siJavascript,
+  siNodedotjs,
+  siSupabase,
+  siPostgresql,
+  siN8n,
+  siPostman,
+  siGit,
+  siVercel,
+} from 'simple-icons'
+import type { SimpleIcon } from 'simple-icons'
+
+export const SKILL_ICONS: Record<string, SimpleIcon> = {
+  react: siReact,
+  nextjs: siNextdotjs,
+  typescript: siTypescript,
+  tailwindcss: siTailwindcss,
+  framer: siFramer,
+  html5: siHtml5,
+  css: siCss,
+  javascript: siJavascript,
+  nodejs: siNodedotjs,
+  supabase: siSupabase,
+  postgresql: siPostgresql,
+  n8n: siN8n,
+  postman: siPostman,
+  git: siGit,
+  vercel: siVercel,
+}

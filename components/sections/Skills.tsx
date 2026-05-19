@@ -4,17 +4,21 @@ import { useTranslations } from 'next-intl'
 import { useReducedMotion } from 'framer-motion'
 import SectionWrapper from '@/components/ui/SectionWrapper'
 import SectionHeader from '@/components/ui/SectionHeader'
-import { skillsRow1, skillsRow2 } from '@/data/skills'
+import SkillIcon from '@/components/ui/SkillIcon'
+import { skillsRow1, skillsRow2, type SkillItem } from '@/data/skills'
+import { SKILL_ICONS } from '@/lib/skillIcons'
 
-function SkillPill({ label }: { label: string }) {
+function SkillPill({ item }: { item: SkillItem }) {
+  const icon = item.iconKey ? SKILL_ICONS[item.iconKey] : undefined
   return (
-    <div className="flex shrink-0 items-center rounded-full border border-border bg-surface px-5 py-2.5 text-[14px] font-medium text-text-primary transition-colors duration-200 hover:border-accent/40 hover:text-accent">
-      {label}
+    <div className="flex shrink-0 items-center gap-2 rounded-full border border-border bg-surface px-5 py-2.5 text-[14px] font-medium text-text-primary transition-colors duration-200 hover:border-accent/40 hover:text-accent">
+      <SkillIcon icon={icon} />
+      {item.name}
     </div>
   )
 }
 
-function SkillTrack({ skills, direction }: { skills: string[]; direction: 'left' | 'right' }) {
+function SkillTrack({ skills, direction }: { skills: SkillItem[]; direction: 'left' | 'right' }) {
   const doubled = [...skills, ...skills]
 
   return (
@@ -23,18 +27,18 @@ function SkillTrack({ skills, direction }: { skills: string[]; direction: 'left'
         className={`flex gap-3 ${direction === 'left' ? 'animate-scroll-left' : 'animate-scroll-right'} group-hover:[animation-play-state:paused] motion-reduce:animate-none`}
       >
         {doubled.map((skill, i) => (
-          <SkillPill key={`${skill}-${i}`} label={skill} />
+          <SkillPill key={`${skill.name}-${i}`} item={skill} />
         ))}
       </div>
     </div>
   )
 }
 
-function StaticSkillGrid({ skills }: { skills: string[] }) {
+function StaticSkillGrid({ skills }: { skills: SkillItem[] }) {
   return (
     <div className="flex flex-wrap gap-2">
       {skills.map((skill) => (
-        <SkillPill key={skill} label={skill} />
+        <SkillPill key={skill.name} item={skill} />
       ))}
     </div>
   )
