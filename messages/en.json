@@ -87,6 +87,8 @@
     "skipToMain": "Skip to main content",
     "heroCanvas": "Decorative 3D animation",
     "github": "GitHub profile",
-    "linkedin": "LinkedIn profile"
+    "linkedin": "LinkedIn profile",
+    "email": "Send an email",
+    "whatsapp": "Message on WhatsApp"
   }
 }
