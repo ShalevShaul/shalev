@@ -11,23 +11,33 @@ import { SKILL_ICONS } from '@/lib/skillIcons'
 function SkillPill({ item }: { item: SkillItem }) {
   const icon = item.iconKey ? SKILL_ICONS[item.iconKey] : undefined
   return (
-    <div className="flex shrink-0 items-center gap-2 rounded-full border border-border bg-surface px-5 py-2.5 text-[14px] font-medium text-text-primary transition-colors duration-200 hover:border-accent/40 hover:text-accent">
-      <SkillIcon icon={icon} />
-      {item.name}
+    <div className="group flex shrink-0 flex-col items-center gap-2.5 rounded-2xl bg-surface px-5 py-4 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition-all duration-300 hover:shadow-[0_4px_20px_rgba(99,102,241,0.1)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.45)] dark:hover:shadow-[0_4px_24px_rgba(99,102,241,0.12)]">
+      <div className="text-text-muted opacity-60 transition-opacity duration-300 group-hover:opacity-90">
+        <SkillIcon icon={icon} size={36} />
+      </div>
+      <span className="text-[11px] font-medium tracking-[0.04em] text-text-muted">
+        {item.name}
+      </span>
     </div>
   )
 }
 
 function SkillTrack({ skills, direction }: { skills: SkillItem[]; direction: 'left' | 'right' }) {
+  // Doubled array + mr-4 on each wrapper (not gap) ensures:
+  // total width = 2 × one-copy-width, so -50% lands exactly at the seam.
   const doubled = [...skills, ...skills]
 
   return (
-    <div className="group flex overflow-hidden">
+    <div className="group/track flex overflow-hidden">
       <div
-        className={`flex gap-3 ${direction === 'left' ? 'animate-scroll-left' : 'animate-scroll-right'} group-hover:[animation-play-state:paused] motion-reduce:animate-none`}
+        className={`flex ${
+          direction === 'left' ? 'animate-scroll-left' : 'animate-scroll-right'
+        } group-hover/track:[animation-play-state:paused] motion-reduce:animate-none`}
       >
         {doubled.map((skill, i) => (
-          <SkillPill key={`${skill.name}-${i}`} item={skill} />
+          <div key={`${skill.name}-${i}`} className="mr-4 shrink-0">
+            <SkillPill item={skill} />
+          </div>
         ))}
       </div>
     </div>
@@ -36,7 +46,7 @@ function SkillTrack({ skills, direction }: { skills: SkillItem[]; direction: 'le
 
 function StaticSkillGrid({ skills }: { skills: SkillItem[] }) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-3">
       {skills.map((skill) => (
         <SkillPill key={skill.name} item={skill} />
       ))}
