@@ -16,7 +16,7 @@ export default function HomePage() {
       <Navbar />
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white rtl:focus:left-auto rtl:focus:right-4"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-100 focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white rtl:focus:left-auto rtl:focus:right-4"
       >
         Skip to main content
       </a>
