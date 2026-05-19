@@ -33,8 +33,6 @@ function InfiniteMarquee({ skills }: { skills: SkillItem[] }) {
   const [paused, setPaused] = useState(false)
   const items = Array.from({ length: COPIES }, () => skills).flat()
 
-  console.log('allSkills', allSkills.length, 'items', items.length)
-
   return (
     <div
       className="overflow-hidden"
