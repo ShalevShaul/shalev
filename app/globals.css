@@ -78,6 +78,12 @@ body {
   background-size: 256px 256px;
 }
 
+/* Skills infinite marquee */
+@keyframes skills-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-100% / var(--copies, 4))); }
+}
+
 /* Design system shadows */
 @utility shadow-card {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
@@ -89,17 +95,3 @@ body {
   box-shadow: 0 0 16px rgba(99, 102, 241, 0.2);
 }
 
-/* Skills slider keyframes */
-@keyframes scroll-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-@keyframes scroll-right {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-
-@theme inline {
-  --animate-scroll-left: scroll-left 35s linear infinite;
-  --animate-scroll-right: scroll-right 45s linear infinite;
-}

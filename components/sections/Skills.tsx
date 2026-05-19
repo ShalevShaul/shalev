@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useReducedMotion } from 'framer-motion'
 import SectionWrapper from '@/components/ui/SectionWrapper'
@@ -7,6 +8,12 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import SkillIcon from '@/components/ui/SkillIcon'
 import { skillsRow1, skillsRow2, type SkillItem } from '@/data/skills'
 import { SKILL_ICONS } from '@/lib/skillIcons'
+
+const allSkills: SkillItem[] = [...skillsRow1, ...skillsRow2]
+
+// 4 copies so the track is always 4× one-copy-width.
+// CSS animates by -100%/4 = -25% = exactly one copy. Seamless loop.
+const COPIES = 4
 
 function SkillPill({ item }: { item: SkillItem }) {
   const icon = item.iconKey ? SKILL_ICONS[item.iconKey] : undefined
@@ -22,19 +29,38 @@ function SkillPill({ item }: { item: SkillItem }) {
   )
 }
 
-function SkillTrack({ skills, direction }: { skills: SkillItem[]; direction: 'left' | 'right' }) {
-  // Doubled array + mr-4 on each wrapper (not gap) ensures:
-  // total width = 2 × one-copy-width, so -50% lands exactly at the seam.
-  const doubled = [...skills, ...skills]
+function InfiniteMarquee({ skills }: { skills: SkillItem[] }) {
+  const [paused, setPaused] = useState(false)
+  const items = Array.from({ length: COPIES }, () => skills).flat()
+
+  console.log('allSkills', allSkills.length, 'items', items.length)
 
   return (
-    <div className="group/track flex overflow-hidden">
+    <div
+      className="overflow-hidden"
+      dir='ltr'
+      style={{
+        maskImage:
+          'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+        WebkitMaskImage:
+          'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+      }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/*
+        w-max = width: max-content — the div expands to its content width,
+        not the parent's width. This makes translateX(-25%) = exactly one copy.
+      */}
       <div
-        className={`flex ${
-          direction === 'left' ? 'animate-scroll-left' : 'animate-scroll-right'
-        } group-hover/track:[animation-play-state:paused] motion-reduce:animate-none`}
+        className="flex w-max"
+        style={{
+          '--copies': String(COPIES),
+          animation: 'skills-marquee 40s linear infinite',
+          animationPlayState: paused ? 'paused' : 'running',
+        } as React.CSSProperties}
       >
-        {doubled.map((skill, i) => (
+        {items.map((skill, i) => (
           <div key={`${skill.name}-${i}`} className="mr-4 shrink-0">
             <SkillPill item={skill} />
           </div>
@@ -61,24 +87,10 @@ export default function Skills() {
   return (
     <SectionWrapper id="skills">
       <SectionHeader id="skills" title={t('title')} subtitle={t('subtitle')} />
-
       {prefersReduced ? (
-        <StaticSkillGrid skills={[...skillsRow1, ...skillsRow2]} />
+        <StaticSkillGrid skills={allSkills} />
       ) : (
-        <div
-          className="relative overflow-hidden"
-          style={{
-            maskImage:
-              'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
-            WebkitMaskImage:
-              'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
-          }}
-        >
-          <div className="flex flex-col gap-4">
-            <SkillTrack skills={skillsRow1} direction="left" />
-            <SkillTrack skills={skillsRow2} direction="right" />
-          </div>
-        </div>
+        <InfiniteMarquee skills={allSkills} />
       )}
     </SectionWrapper>
   )
