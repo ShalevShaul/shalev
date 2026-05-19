@@ -5,13 +5,13 @@
 
 /* Light mode tokens */
 :root {
-  --bg: #ffffff;
-  --surface: #f8f9ff;
-  --surface-2: #f1f3fe;
-  --border: #e2e5f5;
+  --bg: #f5f7ff;
+  --surface: #eceffe;
+  --surface-2: #e2e6fb;
+  --border: #ced6f0;
   --text-primary: #0a0b14;
-  --text-muted: #64748b;
-  --text-disabled: #c1c9e0;
+  --text-muted: #5a6480;
+  --text-disabled: #b8c2de;
   --accent: #4f46e5;
   --accent-hover: #6366f1;
   --accent-alt: #f97316;
