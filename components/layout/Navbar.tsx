@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { useScrolled } from '@/hooks/useScrolled'
@@ -62,20 +62,28 @@ function HamburgerIcon({ open }: { open: boolean }) {
 }
 
 export default function Navbar() {
-  const scrolled = useScrolled()
+  const scrolled = useScrolled(30)
   const [open, setOpen] = useState(false)
   const t = useTranslations('nav')
   const tA11y = useTranslations('a11y')
+
+  const navStyle: CSSProperties = {
+    transition:
+      'background 550ms cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 550ms cubic-bezier(0.25, 0.46, 0.45, 0.94), backdrop-filter 550ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+    background: scrolled ? 'var(--navbar-glass-bg)' : 'transparent',
+    boxShadow: scrolled
+      ? 'inset 0 0 0 1px var(--navbar-glass-border), var(--navbar-glass-shadow)'
+      : 'inset 0 0 0 1px transparent, 0 6px 0 rgba(0,0,0,0)',
+    backdropFilter: scrolled ? 'blur(24px) saturate(160%)' : 'blur(0px)',
+    WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(160%)' : 'blur(0px)',
+  }
 
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 lg:px-6">
         <nav
-          className={`mx-auto flex h-14 max-w-6xl items-center justify-between rounded-2xl px-5 transition-all duration-500 ${
-            scrolled
-              ? 'border border-border/60 bg-surface/80 shadow-[0_8px_32px_rgba(0,0,0,0.1)] backdrop-blur-[20px]'
-              : 'border border-transparent bg-transparent'
-          }`}
+          style={navStyle}
+          className="mx-auto flex h-14 max-w-6xl items-center justify-between rounded-2xl px-5"
         >
           <a
             href="#hero"
@@ -121,11 +129,17 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="fixed inset-0 z-40 flex flex-col bg-bg/95 backdrop-blur-[32px] md:hidden"
+            transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="fixed inset-0 z-40 flex flex-col overflow-hidden bg-bg/92 backdrop-blur-[48px] md:hidden"
           >
+            {/* Ambient glows for depth */}
+            <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+              <div className="absolute -left-24 -top-24 h-[45vw] w-[45vw] rounded-full bg-accent/6 blur-3xl" />
+              <div className="absolute -bottom-24 -right-24 h-[40vw] w-[40vw] rounded-full bg-accent-alt/5 blur-3xl" />
+            </div>
+
             <nav
-              className="flex flex-1 flex-col items-center justify-center gap-7"
+              className="relative z-10 flex flex-1 flex-col items-center justify-center gap-6"
               aria-label="Mobile navigation"
             >
               {NAV_LINKS.map((key, i) => (
@@ -133,27 +147,31 @@ export default function Navbar() {
                   key={key}
                   href={`#${key}`}
                   onClick={() => setOpen(false)}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 22 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: i * 0.07 + 0.05,
-                    duration: 0.4,
+                    delay: i * 0.06 + 0.05,
+                    duration: 0.45,
                     ease: [0.25, 0.46, 0.45, 0.94],
                   }}
-                  className="text-[32px] font-semibold tracking-[-0.01em] text-text-muted transition-colors duration-200 hover:text-text-primary"
+                  className="text-[34px] font-semibold tracking-[-0.02em] text-text-muted transition-colors duration-200 hover:text-text-primary"
                 >
                   {t(key)}
                 </motion.a>
               ))}
             </nav>
 
+            {/* Bottom controls */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.42, duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="flex flex-col items-center gap-6 pb-14 pt-4"
+              transition={{ delay: 0.4, duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="relative z-10 flex flex-col items-center gap-7 pb-16 pt-4"
             >
-              <div className="flex items-center gap-6">
+              {/* Divider */}
+              <div className="h-px w-16 bg-border/50" aria-hidden="true" />
+
+              <div className="flex items-center gap-7">
                 <a
                   href="https://linkedin.com/in/shalevshaul"
                   aria-label={tA11y('linkedin')}
@@ -190,7 +208,7 @@ export default function Navbar() {
                 </a>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 <ThemeToggle />
                 <LangToggle />
               </div>

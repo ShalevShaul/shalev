@@ -1,7 +1,7 @@
 'use client'
 
-import { useReducedMotion } from 'framer-motion'
-import { motion } from 'framer-motion'
+import { useRef, type ReactNode } from 'react'
+import { type MotionValue, useReducedMotion, motion, useScroll, useTransform } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import SectionHeader from '@/components/ui/SectionHeader'
 
@@ -53,17 +53,54 @@ const SERVICE_ICONS = {
 } as const
 
 type ServiceKey = keyof typeof SERVICE_ICONS
-
 const SERVICE_KEYS: ServiceKey[] = ['webDev', 'uiDesign', 'branding', 'consulting']
+const N = SERVICE_KEYS.length
 
-// Each card sticks 28px higher than the previous — creates the fanned deck
-// Last card (index 3) sits closest to the top, becoming the "top of stack"
-const CARD_STICKY_TOP = [208, 180, 152, 124] // px from viewport top
-const CARD_SCROLL_HEIGHT = 360 // px of scroll room per card wrapper
+interface StickyCardProps {
+  i: number
+  total: number
+  scrollYProgress: MotionValue<number>
+  targetScale: number
+  icon: ReactNode
+  title: string
+  description: string
+  cardNum: string
+  totalNum: string
+}
+
+function StickyCard({ i, total, scrollYProgress, targetScale, icon, title, description, cardNum, totalNum }: StickyCardProps) {
+  const scale = useTransform(scrollYProgress, [i * (1 / total), 1], [1, targetScale])
+
+  return (
+    <div className="sticky top-0 flex h-svh items-center justify-center">
+      <motion.div
+        style={{ scale }}
+        className="relative w-[90vw] h-[50vh] max-w-2xl rounded-2xl border border-border bg-surface p-8 origin-top"
+      >
+        <div className="flex items-start justify-between">
+          <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent">
+            {icon}
+          </div>
+          <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-text-disabled">
+            {cardNum} — {totalNum}
+          </span>
+        </div>
+        <h3 className="mb-3 text-[18px] font-semibold leading-snug text-text-primary">{title}</h3>
+        <p className="text-[15px] leading-[1.7] text-text-muted">{description}</p>
+      </motion.div>
+    </div>
+  )
+}
 
 export default function Services() {
   const t = useTranslations('services')
   const prefersReduced = useReducedMotion()
+  const container = useRef<HTMLDivElement>(null)
+
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ['start start', 'end end'],
+  })
 
   if (prefersReduced) {
     return (
@@ -89,46 +126,34 @@ export default function Services() {
   }
 
   return (
-    <section
-      id="services"
-      aria-labelledby="services-heading"
-      className="relative"
-      style={{ minHeight: `calc(100vh + ${SERVICE_KEYS.length * CARD_SCROLL_HEIGHT + 200}px)` }}
-    >
-      {/* Section header — normal flow, scrolls away */}
-      <div className="mx-auto max-w-6xl px-4 pt-24 lg:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
-          <SectionHeader id="services" title={t('title')} subtitle={t('subtitle')} />
-        </motion.div>
-      </div>
-
-      {/* Stacking sticky cards — single column, centered */}
-      <div className="mx-auto max-w-2xl px-4 lg:px-6">
-        {SERVICE_KEYS.map((key, idx) => (
-          <div key={key} style={{ height: CARD_SCROLL_HEIGHT }}>
-            <div
-              style={{
-                position: 'sticky',
-                top: CARD_STICKY_TOP[idx],
-                zIndex: idx + 1,
-              }}
-              className="rounded-2xl border border-border bg-surface p-8 shadow-[0_4px_24px_rgba(0,0,0,0.1)]"
-            >
-              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent">
-                {SERVICE_ICONS[key]}
-              </div>
-              <h3 className="mb-3 text-[18px] font-semibold leading-snug text-text-primary">
-                {t(`${key}.title`)}
-              </h3>
-              <p className="text-[15px] leading-[1.7] text-text-muted">{t(`${key}.description`)}</p>
-            </div>
+    <section id="services" aria-labelledby="services-heading">
+      <div
+        ref={container}
+        className="relative flex w-full flex-col items-center pb-[50vh] pt-[20vh]"
+      >
+        <div className="absolute top-[6%] w-full px-4 lg:px-6">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeader id="services" title={t('title')} subtitle={t('subtitle')} />
           </div>
-        ))}
+        </div>
+
+        {SERVICE_KEYS.map((key, i) => {
+          const targetScale = Math.max(0.75, 1 - (N - i - 1) * 0.05)
+          return (
+            <StickyCard
+              key={key}
+              i={i}
+              total={N}
+              scrollYProgress={scrollYProgress}
+              targetScale={targetScale}
+              icon={SERVICE_ICONS[key]}
+              title={t(`${key}.title`)}
+              description={t(`${key}.description`)}
+              cardNum={String(i + 1).padStart(2, '0')}
+              totalNum={String(N).padStart(2, '0')}
+            />
+          )
+        })}
       </div>
     </section>
   )
