@@ -1,63 +1,237 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { useRef, useEffect, useState, useMemo, Suspense } from 'react'
+import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { PerformanceMonitor } from '@react-three/drei'
 import * as THREE from 'three'
+import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js'
 
 type MousePos = { x: number; y: number }
 
-function Icosphere({ mouse }: { mouse: { current: MousePos } }) {
-  const ref = useRef<THREE.Mesh>(null)
-  const lerped = useRef<MousePos>({ x: 0, y: 0 })
+// Module-level scratch objects — avoids per-frame allocation inside useFrame.
+const _tmpVec   = new THREE.Vector3()
+const _tmpColor = new THREE.Color()
 
-  useFrame((_, delta) => {
-    if (!ref.current) return
-    lerped.current.x += (mouse.current.x - lerped.current.x) * 0.04
-    lerped.current.y += (mouse.current.y - lerped.current.y) * 0.04
-    ref.current.rotation.y += delta * 0.25 + lerped.current.x * 0.008
-    ref.current.rotation.x += lerped.current.y * 0.005
+/**
+ * Fibonacci / golden-angle sphere sampling.
+ * Returns N points distributed maximally evenly across the sphere surface.
+ */
+function fibonacciSpherePoints(n: number, r: number): THREE.Vector3[] {
+  const pts: THREE.Vector3[] = []
+  const phi = Math.PI * (Math.sqrt(5) - 1) // golden angle in radians
+  for (let i = 0; i < n; i++) {
+    const cosTheta = 1 - (2 * i) / (n - 1)
+    const sinTheta = Math.sqrt(Math.max(0, 1 - cosTheta * cosTheta))
+    const angle = phi * i
+    pts.push(
+      new THREE.Vector3(
+        r * sinTheta * Math.cos(angle),
+        r * cosTheta,
+        r * sinTheta * Math.sin(angle),
+      ),
+    )
+  }
+  return pts
+}
+
+/** Deterministic LCG PRNG — stable geometry across re-renders. */
+function makePrng(seed: number) {
+  let s = seed >>> 0
+  return (): number => {
+    s = (Math.imul(1664525, s) + 1013904223) >>> 0
+    return s / 4294967296
+  }
+}
+
+const C_INDIGO = new THREE.Color('#6366f1')
+const C_SOFT   = new THREE.Color('#818cf8')
+const C_ORANGE = new THREE.Color('#fb923c')
+
+const SPHERE_R = 1.85
+
+// ---------------------------------------------------------------------------
+
+function LogoSphere({
+  mouse,
+  reduced,
+}: {
+  mouse: { current: MousePos }
+  reduced: boolean
+}) {
+  const svgData = useLoader(SVGLoader, '/s-logo.svg')
+  const meshRef = useRef<THREE.InstancedMesh>(null)
+  const lerped  = useRef<MousePos>({ x: 0, y: 0 })
+  const clock   = useRef(0)
+
+  /** Desktop: 220 glyphs — mobile/low-perf fallback: 80 */
+  const count = reduced ? 80 : 220
+  const pts   = useMemo(() => fibonacciSpherePoints(count, SPHERE_R), [count])
+
+  /**
+   * Raw (pre-depth-attenuation) RGB floats for each instance.
+   * Stored as a flat Float32Array [r0,g0,b0, r1,g1,b1, ...] so useFrame can
+   * read and scale them per-frame without allocating Color objects.
+   */
+  const baseColors = useRef<Float32Array | null>(null)
+
+  /**
+   * Build a single merged ShapeGeometry from the SVG's path data.
+   * All three paths in s-logo.svg are straight-line polygons (M L V H Z only).
+   * Y is negated on scale to convert from SVG-space (Y-down) to Three.js (Y-up).
+   */
+  const logoGeo = useMemo(() => {
+    const shapes: THREE.Shape[] = []
+    for (const path of svgData.paths) {
+      shapes.push(...SVGLoader.createShapes(path))
+    }
+
+    const geo = new THREE.ShapeGeometry(shapes)
+
+    geo.computeBoundingBox()
+    const bbox = geo.boundingBox!
+    const center = new THREE.Vector3()
+    bbox.getCenter(center)
+    const sizeVec = new THREE.Vector3()
+    bbox.getSize(sizeVec)
+    const maxDim = Math.max(sizeVec.x, sizeVec.y)
+
+    geo.translate(-center.x, -center.y, 0)
+    geo.scale(1 / maxDim, -1 / maxDim, 1)
+
+    return geo
+  }, [svgData])
+
+  useEffect(() => {
+    return () => { logoGeo.dispose() }
+  }, [logoGeo])
+
+  /** Populate instance matrices + base colors once on mount / count change. */
+  useEffect(() => {
+    const mesh = meshRef.current
+    if (!mesh) return
+
+    const dummy  = new THREE.Object3D()
+    const rand   = makePrng(0xc0ffee42)
+    const colors = new Float32Array(pts.length * 3)
+
+    for (let i = 0; i < pts.length; i++) {
+      dummy.position.copy(pts[i])
+      dummy.lookAt(0, 0, 0)
+      dummy.rotateX(Math.PI)
+      dummy.rotateZ(rand() * Math.PI * 4)
+      dummy.scale.setScalar(0.15 + rand() * 0.10)
+      dummy.updateMatrix()
+      mesh.setMatrixAt(i, dummy.matrix)
+
+      // ── Base color (depth-attenuation applied per-frame in useFrame) ─────
+      const t = rand()
+      const c = t < 0.07 ? C_ORANGE : t < 0.28 ? C_SOFT : C_INDIGO
+      colors[i * 3]     = c.r
+      colors[i * 3 + 1] = c.g
+      colors[i * 3 + 2] = c.b
+    }
+
+    baseColors.current = colors
+    mesh.instanceMatrix.needsUpdate = true
+  }, [pts])
+
+  useFrame((_, dt) => {
+    const mesh   = meshRef.current
+    const colors = baseColors.current
+    if (!mesh || !colors) return
+
+    clock.current += dt
+
+    // ── Cursor tracking (lerped for silky smoothness) ────────────────────
+    const lf = 0.035
+    lerped.current.x += (mouse.current.x - lerped.current.x) * lf
+    lerped.current.y += (mouse.current.y - lerped.current.y) * lf
+
+    // ── Rotation ─────────────────────────────────────────────────────────
+    mesh.rotation.y += dt * 0.10 + lerped.current.x * 0.007
+    mesh.rotation.x = lerped.current.y * 0.22
+
+    // ── Ambient breath ────────────────────────────────────────────────────
+    mesh.scale.setScalar(1 + Math.sin(clock.current * 0.38) * 0.012)
+
+    // ── Per-instance depth attenuation ───────────────────────────────────
+    // Rotate each point's local position by the mesh quaternion to get its
+    // current world-space Z. smoothstep maps [-1, +0.6] → [dim, bright] so
+    // the front hemisphere is vivid and the rear fades to near-invisible.
+    // This upload is ~2.6 KB/frame — negligible GPU bandwidth.
+    const q = mesh.quaternion
+    for (let i = 0; i < pts.length; i++) {
+      _tmpVec.copy(pts[i]).applyQuaternion(q)
+      const depth      = -_tmpVec.z / SPHERE_R           // +1 = front (toward camera), -1 = rear
+      const brightness = 0.06 + 0.94 * THREE.MathUtils.smoothstep(depth, -1, 0.6)
+
+      _tmpColor.setRGB(
+        colors[i * 3]     * brightness,
+        colors[i * 3 + 1] * brightness,
+        colors[i * 3 + 2] * brightness,
+      )
+      mesh.setColorAt(i, _tmpColor)
+    }
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true
   })
 
   return (
-    <mesh ref={ref}>
-      <icosahedronGeometry args={[1.8, 2]} />
-      <meshStandardMaterial
-        color="#6366f1"
+    <instancedMesh
+      ref={meshRef}
+      args={[undefined, undefined, count]}
+      frustumCulled={false}
+    >
+      <primitive object={logoGeo} attach="geometry" />
+      {/*
+       * Wireframe of the triangulated logo polygon — shows silhouette boundary
+       * and interior mesh structure. Additive blending: overlapping front-facing
+       * instances accumulate brightness naturally; depth-attenuated rear instances
+       * fade to near-zero, producing spherical volume without postprocessing.
+       */}
+      <meshBasicMaterial
         wireframe
         transparent
-        opacity={0.65}
+        opacity={0.85}
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
       />
-    </mesh>
+    </instancedMesh>
   )
 }
 
+// ---------------------------------------------------------------------------
+
 export default function HeroCanvas() {
-  const mouse = useRef<MousePos>({ x: 0, y: 0 })
-  const [dpr, setDpr] = useState<[number, number]>([1, 2])
+  const mouse             = useRef<MousePos>({ x: 0, y: 0 })
+  const [dpr, setDpr]     = useState<[number, number]>([1, 2])
+  const [reduced, setReduced] = useState(false)
 
   useEffect(() => {
-    function handleMouse(e: MouseEvent) {
-      mouse.current.x = (e.clientX / window.innerWidth - 0.5) * 2
+    const onMove = (e: MouseEvent) => {
+      mouse.current.x =  (e.clientX / window.innerWidth  - 0.5) * 2
       mouse.current.y = -(e.clientY / window.innerHeight - 0.5) * 2
     }
-    window.addEventListener('mousemove', handleMouse, { passive: true })
-    return () => window.removeEventListener('mousemove', handleMouse)
+    window.addEventListener('mousemove', onMove, { passive: true })
+    return () => window.removeEventListener('mousemove', onMove)
   }, [])
 
   return (
     <div className="h-full w-full" aria-hidden="true">
       <Canvas
         dpr={dpr}
-        camera={{ position: [0, 0, 5], fov: 45 }}
+        camera={{ position: [0, 0, 5.5], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
         frameloop="always"
       >
-        <PerformanceMonitor onDecline={() => setDpr([1, 1])}>
-          <ambientLight intensity={0.3} />
-          <pointLight position={[4, 4, 4]} intensity={1.5} color="#6366f1" />
-          <pointLight position={[-4, -2, 3]} intensity={0.8} color="#fb923c" />
-          <Icosphere mouse={mouse} />
+        <PerformanceMonitor
+          onDecline={() => {
+            setDpr([1, 1])
+            setReduced(true)
+          }}
+        >
+          <Suspense fallback={null}>
+            <LogoSphere mouse={mouse} reduced={reduced} />
+          </Suspense>
         </PerformanceMonitor>
       </Canvas>
     </div>
