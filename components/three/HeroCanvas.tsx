@@ -5,6 +5,7 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { PerformanceMonitor } from '@react-three/drei'
 import * as THREE from 'three'
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js'
+import { useTheme } from 'next-themes'
 
 type MousePos = { x: number; y: number }
 
@@ -43,9 +44,15 @@ function makePrng(seed: number) {
   }
 }
 
+// Dark mode palette — additive blending on dark bg
 const C_INDIGO = new THREE.Color('#6366f1')
-const C_SOFT   = new THREE.Color('#818cf8')
+const C_SOFT   = new THREE.Color('#7476f6') // toned down from #818cf8 — less white
 const C_ORANGE = new THREE.Color('#fb923c')
+
+// Light mode palette — normal blending on light bg
+const C_INDIGO_L = new THREE.Color('#4f46e5') // site accent — readable on light bg
+const C_SOFT_L   = new THREE.Color('#818cf8') // lavender — softer accent
+const C_ORANGE_L = new THREE.Color('#f97316') // site accent-alt
 
 const SPHERE_R = 1.85
 
@@ -54,9 +61,11 @@ const SPHERE_R = 1.85
 function LogoSphere({
   mouse,
   reduced,
+  isDark,
 }: {
   mouse: { current: MousePos }
   reduced: boolean
+  isDark: boolean
 }) {
   const svgData = useLoader(SVGLoader, '/s-logo.svg')
   const meshRef = useRef<THREE.InstancedMesh>(null)
@@ -125,7 +134,9 @@ function LogoSphere({
 
       // ── Base color (depth-attenuation applied per-frame in useFrame) ─────
       const t = rand()
-      const c = t < 0.07 ? C_ORANGE : t < 0.28 ? C_SOFT : C_INDIGO
+      const c = isDark
+        ? (t < 0.07 ? C_ORANGE   : t < 0.28 ? C_SOFT   : C_INDIGO)
+        : (t < 0.07 ? C_ORANGE_L : t < 0.28 ? C_SOFT_L : C_INDIGO_L)
       colors[i * 3]     = c.r
       colors[i * 3 + 1] = c.g
       colors[i * 3 + 2] = c.b
@@ -133,7 +144,7 @@ function LogoSphere({
 
     baseColors.current = colors
     mesh.instanceMatrix.needsUpdate = true
-  }, [pts])
+  }, [pts, isDark])
 
   useFrame((_, dt) => {
     const mesh   = meshRef.current
@@ -148,8 +159,8 @@ function LogoSphere({
     lerped.current.y += (mouse.current.y - lerped.current.y) * lf
 
     // ── Rotation ─────────────────────────────────────────────────────────
-    mesh.rotation.y += dt * 0.10 + lerped.current.x * 0.007
-    mesh.rotation.x = lerped.current.y * 0.22
+    mesh.rotation.x = -lerped.current.y * 0.32
+    mesh.rotation.y =  lerped.current.x * 0.32 + Math.sin(clock.current * 0.15) * 0.06
 
     // ── Ambient breath ────────────────────────────────────────────────────
     mesh.scale.setScalar(1 + Math.sin(clock.current * 0.38) * 0.012)
@@ -162,8 +173,12 @@ function LogoSphere({
     const q = mesh.quaternion
     for (let i = 0; i < pts.length; i++) {
       _tmpVec.copy(pts[i]).applyQuaternion(q)
-      const depth      = -_tmpVec.z / SPHERE_R           // +1 = front (toward camera), -1 = rear
-      const brightness = 0.06 + 0.94 * THREE.MathUtils.smoothstep(depth, -1, 0.6)
+      const depth      = _tmpVec.z / SPHERE_R     // +1 = front (toward camera), -1 = rear
+      // Dark: rear fades to a slight glow (0.06) — works with additive blending on dark bg.
+      // Light: rear fades to pure zero — normal blending on light bg needs clean cutoff.
+      const brightness = isDark
+        ? 0.25 + 0.94 * THREE.MathUtils.smoothstep(depth, -0.9,   0)
+        :               THREE.MathUtils.smoothstep(depth, -0.3, 0.8)
 
       _tmpColor.setRGB(
         colors[i * 3]     * brightness,
@@ -189,11 +204,12 @@ function LogoSphere({
        * fade to near-zero, producing spherical volume without postprocessing.
        */}
       <meshBasicMaterial
-        wireframe
+        // wireframe
         transparent
         opacity={0.85}
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={isDark ? THREE.AdditiveBlending : THREE.NormalBlending}
+        side={THREE.BackSide}
       />
     </instancedMesh>
   )
@@ -205,6 +221,8 @@ export default function HeroCanvas() {
   const mouse             = useRef<MousePos>({ x: 0, y: 0 })
   const [dpr, setDpr]     = useState<[number, number]>([1, 2])
   const [reduced, setReduced] = useState(false)
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme !== 'light'
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
@@ -230,7 +248,7 @@ export default function HeroCanvas() {
           }}
         >
           <Suspense fallback={null}>
-            <LogoSphere mouse={mouse} reduced={reduced} />
+            <LogoSphere mouse={mouse} reduced={reduced} isDark={isDark} />
           </Suspense>
         </PerformanceMonitor>
       </Canvas>
