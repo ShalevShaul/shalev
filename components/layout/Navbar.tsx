@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, type CSSProperties } from 'react'
+import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { useScrolled } from '@/hooks/useScrolled'
@@ -42,6 +42,16 @@ function WhatsAppIcon() {
   )
 }
 
+function SLogo() {
+  return (
+    <svg width="447" height="541" viewBox="0 0 447 541" fill="currentColor" aria-hidden="true" className="h-6 lg:h-8 w-auto">
+      <path d="M259 189V172L264 169H269.5L446 280V412L241 541H235L223 530V525L423 399V294L259 190V189Z" />
+      <path d="M153.5 455L8.5 365.5L1 368V386.767L148.5 480H156.5L332 366V331.5L125 196V185.5L288 84H289H290L439 179H444L447 176V157L293 58H285L101 174V207V208L308 342L310 344V352.5L153.5 455Z" />
+      <path d="M175 341V360L171 363H165L0 260V123L195 0H200.5L213 13V17L23 136V245.857L175 341Z" />
+    </svg>
+  )
+}
+
 function HamburgerIcon({ open }: { open: boolean }) {
   return (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
@@ -64,8 +74,29 @@ function HamburgerIcon({ open }: { open: boolean }) {
 export default function Navbar() {
   const scrolled = useScrolled(30)
   const [open, setOpen] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const prevScrollY = useRef(0)
+  const downAccum = useRef(0)
   const t = useTranslations('nav')
   const tA11y = useTranslations('a11y')
+
+  useEffect(() => {
+    const onScroll = () => {
+      const current = window.scrollY
+      const delta = current - prevScrollY.current
+      prevScrollY.current = current
+
+      if (delta > 0) {
+        downAccum.current += delta
+        if (downAccum.current > 60 && current > 80) setHidden(true)
+      } else {
+        downAccum.current = 0
+        setHidden(false)
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const navStyle: CSSProperties = {
     transition:
@@ -74,22 +105,27 @@ export default function Navbar() {
     boxShadow: scrolled
       ? 'inset 0 0 0 1px var(--navbar-glass-border), var(--navbar-glass-shadow)'
       : 'inset 0 0 0 1px transparent, 0 6px 0 rgba(0,0,0,0)',
-    backdropFilter: scrolled ? 'blur(24px) saturate(160%)' : 'blur(0px)',
-    WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(160%)' : 'blur(0px)',
+    backdropFilter: scrolled ? 'blur(8px) saturate(160%)' : 'blur(0px)',
+    WebkitBackdropFilter: scrolled ? 'blur(8px) saturate(160%)' : 'blur(0px)',
   }
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 lg:px-6">
+      <motion.header
+        className="fixed inset-x-0 top-0 z-50 px-4 pt-4 lg:px-6"
+        animate={{ y: (hidden && !open) ? '-110%' : '0%' }}
+        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
         <nav
           style={navStyle}
           className="mx-auto flex h-14 max-w-6xl items-center justify-between rounded-2xl px-5"
         >
           <a
             href="#hero"
-            className="text-[15px] font-semibold tracking-[-0.01em] text-text-primary transition-colors duration-200 hover:text-accent"
+            aria-label="Home"
+            className="text-text-muted transition-colors duration-200 hover:text-text-primary"
           >
-            Shalev Shaul
+            <SLogo />
           </a>
 
           <ul className="hidden items-center gap-8 md:flex" role="list">
@@ -120,7 +156,7 @@ export default function Navbar() {
             </button>
           </div>
         </nav>
-      </header>
+      </motion.header>
 
       {/* Full-screen mobile overlay */}
       <AnimatePresence>
