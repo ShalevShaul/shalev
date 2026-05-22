@@ -39,21 +39,21 @@ export default function Hero() {
           >
             <motion.p
               variants={itemVariants}
-              className="font-mono text-[13px] font-medium uppercase tracking-[0.1em] text-accent"
+              className="font-mono text-[13px] font-medium uppercase tracking-widest text-accent"
             >
               {t('role')}
             </motion.p>
 
             <motion.h1
               variants={itemVariants}
-              className="text-[clamp(48px,7vw,96px)] font-extrabold leading-[1.0] tracking-[-0.03em] text-text-primary"
+              className="text-[clamp(48px,7vw,96px)] font-extrabold leading-none tracking-[-0.03em] text-text-primary"
             >
               {t('name')}
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
-              className="max-w-[440px] text-[18px] leading-[1.6] text-text-muted"
+              className="max-w-110 text-[18px] leading-[1.6] text-text-muted"
             >
               {t('tagline')}
             </motion.p>
@@ -68,7 +68,7 @@ export default function Hero() {
             initial={prefersReduced ? undefined : { opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.0, delay: 0.2 }}
-            className="h-[280px] sm:h-[380px] lg:h-[520px]"
+            className="h-70 sm:h-95 lg:h-130"
             aria-hidden="true"
           >
             <HeroCanvas />
@@ -84,7 +84,7 @@ export default function Hero() {
           transition={{ delay: 1.4, duration: 0.6 }}
           className="flex flex-col items-center gap-2 text-text-muted"
         >
-          <span className="font-mono text-[11px] uppercase tracking-[0.1em]">{t('scrollHint')}</span>
+          <span className="font-mono text-[11px] uppercase tracking-widest">{t('scrollHint')}</span>
           <motion.div
             animate={prefersReduced ? undefined : { y: [0, 6, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
