@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { ThemeProvider } from 'next-themes'
+import { Analytics } from '@vercel/analytics/next'
 import { routing } from '@/i18n/routing'
 import '../globals.css'
 
@@ -56,6 +57,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           <NextIntlClientProvider messages={messages}>
             {children}
           </NextIntlClientProvider>
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
