@@ -129,7 +129,7 @@ export default function Services() {
     <section id="services" aria-labelledby="services-heading">
       <div
         ref={container}
-        className="relative flex w-full flex-col items-center pb-[50vh] pt-[20vh]"
+        className="relative flex w-full flex-col items-center pt-[20vh]"
       >
         <div className="absolute top-[6%] w-full px-4 lg:px-6">
           <div className="mx-auto max-w-6xl">
