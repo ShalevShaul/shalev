@@ -13,25 +13,29 @@ export type ProjectData = {
 
 export const projects: ProjectData[] = [
   {
-    slug: 'portfolio',
-    title: 'Personal Portfolio',
-    role: 'Full-Stack Developer & Designer',
-    year: '2025',
+    slug: 'pare',
+    title: 'PARE',
+    role: 'Full-Stack Developer',
+    year: '2026',
     overview:
-      'A cinematic, bilingual portfolio built with Next.js 16, Tailwind v4, and React Three Fiber. Features dark/light mode, RTL Hebrew support, infinite skills animation, and a 3D icosphere hero.',
-    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'React Three Fiber'],
-    githubUrl: 'https://github.com/shalevshaul',
+      'A full-featured expense and income management app. Track transactions by date, manage recurring expenses, group by categories, and generate financial reports — income vs. expenses, category breakdowns, top 5 costs, and CSV/PDF export.',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express.js', 'PostgreSQL'],
+    image: '/projects/pare.png',
+    liveUrl: 'https://pare-three.vercel.app/',
+    githubUrl: 'https://github.com/ShalevShaul/PARE',
     featured: true,
   },
   {
-    slug: 'project-two',
-    title: 'Project Two',
-    role: 'Full-Stack Developer',
-    year: '2024',
+    slug: 'little-lemon',
+    title: 'Little Lemon Restaurant',
+    role: 'Frontend Developer',
+    year: '2025',
     overview:
-      'An end-to-end web application with authentication, real-time data, and a clean accessible interface designed to make complex workflows feel effortless.',
-    tech: ['React', 'Node.js', 'Supabase', 'TypeScript'],
-    githubUrl: 'https://github.com/shalevshaul',
+      'A restaurant website for Little Lemon featuring signature dishes, customer reviews, and a full table reservation flow — with booking tracking, confirmation emails, and calendar integration.',
+    tech: ['React', 'TypeScript', 'Vite', 'SCSS'],
+    image: '/projects/lemon.png',
+    liveUrl: 'https://little-lemon-reserve.vercel.app/',
+    githubUrl: 'https://github.com/ShalevShaul/little-lemon',
     featured: true,
   },
   {

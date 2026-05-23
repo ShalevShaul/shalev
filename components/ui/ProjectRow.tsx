@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useReducedMotion } from 'framer-motion'
 import { fadeUp, staggerContainer } from '@/lib/motion'
+import Image from 'next/image'
 import TechTag from './TechTag'
 import Button from './Button'
 import type { ProjectData } from '@/data/projects'
@@ -31,9 +32,19 @@ export default function ProjectRow({ project, index, liveCta, githubCta }: Props
         variants={prefersReduced ? {} : fadeUp}
         className={`relative aspect-video overflow-hidden rounded-2xl border border-border bg-surface-2 ${isEven ? '' : 'lg:order-last'}`}
       >
-        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-accent/20 via-surface-2 to-accent-alt/10">
-          <span className="font-mono text-[13px] text-text-muted/40">{project.title}</span>
-        </div>
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-accent/20 via-surface-2 to-accent-alt/10">
+            <span className="font-mono text-[13px] text-text-muted/40">{project.title}</span>
+          </div>
+        )}
         <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/5" aria-hidden="true" />
       </motion.div>
 
