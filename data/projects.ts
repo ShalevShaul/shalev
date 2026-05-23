@@ -6,6 +6,7 @@ export type ProjectData = {
   overview: string
   tech: string[]
   image?: string
+  imageScroll?: string
   liveUrl?: string
   githubUrl?: string
   featured: boolean
@@ -21,6 +22,7 @@ export const projects: ProjectData[] = [
       'A full-featured expense and income management app. Track transactions by date, manage recurring expenses, group by categories, and generate financial reports — income vs. expenses, category breakdowns, top 5 costs, and CSV/PDF export.',
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express.js', 'PostgreSQL'],
     image: '/projects/pare.png',
+    imageScroll: '/projects/pare-full.png',
     liveUrl: 'https://pare-three.vercel.app/',
     githubUrl: 'https://github.com/ShalevShaul/PARE',
     featured: true,
@@ -34,6 +36,7 @@ export const projects: ProjectData[] = [
       'A restaurant website for Little Lemon featuring signature dishes, customer reviews, and a full table reservation flow — with booking tracking, confirmation emails, and calendar integration.',
     tech: ['React', 'TypeScript', 'Vite', 'SCSS'],
     image: '/projects/lemon.png',
+    imageScroll: '/projects/lemo-full.png',
     liveUrl: 'https://little-lemon-reserve.vercel.app/',
     githubUrl: 'https://github.com/ShalevShaul/little-lemon',
     featured: true,

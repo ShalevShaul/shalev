@@ -1,7 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useReducedMotion } from 'framer-motion'
+import { useRef, useState } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 import { fadeUp, staggerContainer } from '@/lib/motion'
 import Image from 'next/image'
 import TechTag from './TechTag'
@@ -18,6 +18,27 @@ type Props = {
 export default function ProjectRow({ project, index, liveCta, githubCta }: Props) {
   const prefersReduced = useReducedMotion()
   const isEven = index % 2 === 0
+  const containerRef = useRef<HTMLDivElement>(null)
+  const scrollImgRef = useRef<HTMLImageElement>(null)
+  const [translateY, setTranslateY] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
+
+  const handleMouseEnter = () => {
+    if (prefersReduced || !project.imageScroll) return
+    if (scrollImgRef.current && containerRef.current) {
+      const imgNaturalH = scrollImgRef.current.naturalHeight
+      const imgNaturalW = scrollImgRef.current.naturalWidth
+      const renderedW = containerRef.current.offsetWidth
+      const renderedH = renderedW * (imgNaturalH / imgNaturalW)
+      const containerH = containerRef.current.offsetHeight
+      setTranslateY(-(renderedH - containerH))
+    }
+    setIsHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+  }
 
   return (
     <motion.article
@@ -29,22 +50,51 @@ export default function ProjectRow({ project, index, liveCta, githubCta }: Props
     >
       {/* Image */}
       <motion.div
+        ref={containerRef}
         variants={prefersReduced ? {} : fadeUp}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         className={`relative aspect-video overflow-hidden rounded-2xl border border-border bg-surface-2 ${isEven ? '' : 'lg:order-last'}`}
       >
-        {project.image ? (
+        {project.imageScroll && (
+          <img
+            ref={scrollImgRef}
+            src={project.imageScroll}
+            alt={project.title}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: 'auto',
+              transform: `translateY(${isHovered ? translateY : 0}px)`,
+              transition: isHovered ? 'transform 3s ease-in-out' : 'transform 0.6s ease-out',
+              opacity: isHovered ? 1 : 0,
+              pointerEvents: 'none',
+            }}
+          />
+        )}
+
+        {project.image && (
           <Image
             src={project.image}
             alt={project.title}
             fill
-            className="object-cover"
+            className="object-fill"
             sizes="(max-width: 1024px) 100vw, 50vw"
+            style={{
+              opacity: isHovered && project.imageScroll ? 0 : 1,
+              transition: 'opacity 0.3s ease',
+            }}
           />
-        ) : (
+        )}
+
+        {!project.image && !project.imageScroll && (
           <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-accent/20 via-surface-2 to-accent-alt/10">
             <span className="font-mono text-[13px] text-text-muted/40">{project.title}</span>
           </div>
         )}
+
         <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/5" aria-hidden="true" />
       </motion.div>
 
