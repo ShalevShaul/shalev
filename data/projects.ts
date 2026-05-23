@@ -42,6 +42,19 @@ export const projects: ProjectData[] = [
     featured: true,
   },
   {
+    slug: 'storeit',
+    title: 'StoreIt',
+    role: 'Full-Stack Developer',
+    year: '2025',
+    overview:
+      'A cloud storage platform with user authentication, file management — upload, delete, rename, download, and share files with other users. Supports documents, images, and media with built-in search.',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Appwrite'],
+    image: '/projects/storeit.png',
+    liveUrl: 'https://store-it-storage-management.vercel.app',
+    githubUrl: 'https://github.com/ShalevShaul/storeIt',
+    featured: true,
+  },
+  {
     slug: 'project-three',
     title: 'Project Three',
     role: 'Frontend Developer',
