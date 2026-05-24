@@ -20,6 +20,15 @@ function GitHubIcon() {
   )
 }
 
+function ExternalLinkIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+    </svg>
+  )
+}
+
 export default function ProjectTile({ project, githubCta }: Props) {
   const prefersReduced = useReducedMotion()
 
@@ -47,17 +56,30 @@ export default function ProjectTile({ project, githubCta }: Props) {
       <div className="flex flex-col p-6">
       <div className="mb-4 flex items-start justify-between gap-4">
         <h3 className="text-[17px] font-semibold leading-snug text-text-primary">{project.title}</h3>
-        {project.githubUrl && (
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${githubCta} — ${project.title}`}
-            className="shrink-0 text-text-muted transition-colors duration-200 hover:text-accent"
-          >
-            <GitHubIcon />
-          </a>
-        )}
+        <div className="flex shrink-0 items-center gap-2">
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Live site — ${project.title}`}
+              className="text-text-muted transition-colors duration-200 hover:text-accent"
+            >
+              <ExternalLinkIcon />
+            </a>
+          )}
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${githubCta} — ${project.title}`}
+              className="text-text-muted transition-colors duration-200 hover:text-accent"
+            >
+              <GitHubIcon />
+            </a>
+          )}
+        </div>
       </div>
 
       <p className="mb-4 flex-1 text-[14px] leading-[1.7] text-text-muted">{project.overview}</p>
