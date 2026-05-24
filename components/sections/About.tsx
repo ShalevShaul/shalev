@@ -1,15 +1,23 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useReducedMotion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useReducedMotion, useScroll } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import SectionWrapper from '@/components/ui/SectionWrapper'
 import SectionHeader from '@/components/ui/SectionHeader'
+import { ScrollVideoCanvas } from '@/components/ui/ScrollVideoCanvas'
 import { fadeUp, staggerContainer } from '@/lib/motion'
 
 export default function About() {
   const t = useTranslations('about')
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotion() ?? false
+  const boxRef = useRef<HTMLDivElement>(null)
+
+  const { scrollYProgress } = useScroll({
+    target: boxRef,
+    offset: ['start end', 'end start'],
+  })
+
   const fade = prefersReduced ? {} : fadeUp
   const stagger = prefersReduced ? {} : staggerContainer
 
@@ -24,25 +32,28 @@ export default function About() {
           </motion.p>
         </div>
 
-        {/* Right: decorative — reserved for future interactive element */}
+        {/* Right: scroll video — spinning border */}
         <motion.div
           variants={stagger}
-          className="relative flex min-h-75 items-center justify-center overflow-hidden rounded-3xl border border-border bg-surface-2 p-12"
+          className="relative rounded-3xl p-0.5 dark:p-px overflow-hidden"
         >
+          {/* Spinning conic gradient — scaled up so corners stay covered while rotating */}
           <div
-            className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-accent/20 blur-3xl"
+            className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[150%] -translate-x-1/2 -translate-y-1/2"
+            style={{
+              background: 'conic-gradient(from 0deg, transparent 0%, transparent 65%, var(--accent-alt) 78%, var(--accent) 85%, var(--accent-alt) 92%, transparent 100%)',
+              animation: 'border-spin 4s linear infinite',
+            }}
             aria-hidden="true"
           />
           <div
-            className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-accent-alt/10 blur-3xl"
-            aria-hidden="true"
-          />
-          <motion.div
-            variants={fade}
-            className="relative flex h-24 w-24 items-center justify-center rounded-full border border-accent/30 bg-accent/10"
+            ref={boxRef}
+            className="relative z-10 overflow-hidden rounded-[23px] bg-surface-2 min-h-96 lg:min-h-130"
           >
-            <span className="text-3xl font-bold text-accent">SS</span>
-          </motion.div>
+            <ScrollVideoCanvas scrollYProgress={scrollYProgress} reducedMotion={prefersReduced} />
+            <div className="pointer-events-none absolute inset-0 bg-white/40 dark:hidden" aria-hidden="true" />
+            <div className="pointer-events-none absolute inset-0 hidden dark:block bg-black/40" aria-hidden="true" />
+          </div>
         </motion.div>
       </div>
     </SectionWrapper>
