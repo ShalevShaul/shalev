@@ -14,6 +14,8 @@ import Button from '@/components/ui/Button'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
+const IL_PHONE = /^(05\d{8}|0[2-489]\d{7})$/
+
 const INPUT_CLASSES =
   'w-full rounded-xl border border-border bg-surface px-4 py-3 text-[15px] text-text-primary placeholder:text-text-muted transition-colors duration-200 focus-visible:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 aria-[invalid=true]:border-red-500'
 
@@ -26,9 +28,13 @@ export default function Contact() {
   const schema = useMemo(
     () =>
       z.object({
-        name: z.string().min(2, { message: t('nameError') }),
-        email: z.string().email({ message: t('emailError') }),
-        message: z.string().min(10, { message: t('messageError') }),
+        name: z.string().min(2, { message: t('nameError') }).max(100),
+        email: z.email({ message: t('emailError') }),
+        phone: z
+          .string()
+          .refine((val) => val === '' || IL_PHONE.test(val), { message: t('phoneError') })
+          .optional(),
+        message: z.string().min(10, { message: t('messageError') }).max(5000),
       }),
     [t],
   )
@@ -42,15 +48,12 @@ export default function Contact() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
 
+  const phoneField = register('phone')
+
   async function onSubmit(data: FormData) {
     setStatus('loading')
-    const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL
-    if (!webhookUrl) {
-      setStatus('error')
-      return
-    }
     try {
-      const res = await fetch(webhookUrl, {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...data, locale, timestamp: new Date().toISOString() }),
@@ -88,6 +91,8 @@ export default function Contact() {
               <input
                 id="contact-name"
                 type="text"
+                autoComplete="name"
+                maxLength={100}
                 placeholder={t('namePlaceholder')}
                 aria-invalid={errors.name ? 'true' : 'false'}
                 aria-describedby={errors.name ? 'contact-name-error' : undefined}
@@ -109,6 +114,7 @@ export default function Contact() {
               <input
                 id="contact-email"
                 type="email"
+                autoComplete="email"
                 placeholder={t('emailPlaceholder')}
                 aria-invalid={errors.email ? 'true' : 'false'}
                 aria-describedby={errors.email ? 'contact-email-error' : undefined}
@@ -122,6 +128,35 @@ export default function Contact() {
               )}
             </div>
 
+            {/* Phone */}
+            <div>
+              <label htmlFor="contact-phone" className="mb-2 block text-[14px] font-medium text-text-primary">
+                {t('phone')}
+                <span className="ms-1 text-text-muted">({t('optional')})</span>
+              </label>
+              <input
+                id="contact-phone"
+                type="tel"
+                inputMode="numeric"
+                autoComplete="tel"
+                maxLength={10}
+                placeholder={t('phonePlaceholder')}
+                aria-invalid={errors.phone ? 'true' : 'false'}
+                aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
+                {...phoneField}
+                onChange={(e) => {
+                  e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10)
+                  phoneField.onChange(e)
+                }}
+                className={INPUT_CLASSES}
+              />
+              {errors.phone && (
+                <p id="contact-phone-error" role="alert" className="mt-1.5 text-[13px] text-red-500">
+                  {errors.phone.message}
+                </p>
+              )}
+            </div>
+
             {/* Message */}
             <div>
               <label htmlFor="contact-message" className="mb-2 block text-[14px] font-medium text-text-primary">
@@ -130,6 +165,7 @@ export default function Contact() {
               <textarea
                 id="contact-message"
                 rows={5}
+                maxLength={5000}
                 placeholder={t('messagePlaceholder')}
                 aria-invalid={errors.message ? 'true' : 'false'}
                 aria-describedby={errors.message ? 'contact-message-error' : undefined}
