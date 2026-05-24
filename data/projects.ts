@@ -80,6 +80,19 @@ export const projects: ProjectData[] = [
     featured: false,
   },
   {
+    slug: 'vacations',
+    title: 'Vacations',
+    role: 'Full-Stack Developer',
+    year: '2025',
+    overview:
+      'A full-stack vacation management app with role-based access. Users browse, filter, and follow vacations. Admins add, edit, delete trips, view follower stats in a chart, and export data to CSV. Auth via JWT.',
+    tech: ['React', 'TypeScript', 'Node.js', 'MySQL'],
+    image: '/projects/vacations.png',
+    liveUrl: 'https://vacations-five.vercel.app',
+    githubUrl: 'https://github.com/ShalevShaul/vacations',
+    featured: false,
+  },
+  {
     slug: 'project-three',
     title: 'Project Three',
     role: 'Frontend Developer',
