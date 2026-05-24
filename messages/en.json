@@ -71,8 +71,12 @@
     "namePlaceholder": "Your name",
     "emailPlaceholder": "your@email.com",
     "messagePlaceholder": "Tell me about your project…",
+    "phone": "Phone",
+    "phonePlaceholder": "050-000-0000",
+    "optional": "optional",
     "nameError": "Please enter your name (min. 2 characters)",
     "emailError": "Please enter a valid email address",
+    "phoneError": "Please enter a valid Israeli phone number",
     "messageError": "Please write a message (min. 10 characters)"
   },
   "footer": {

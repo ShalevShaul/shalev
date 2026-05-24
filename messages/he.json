@@ -71,8 +71,12 @@
     "namePlaceholder": "השם שלך",
     "emailPlaceholder": "your@email.com",
     "messagePlaceholder": "ספר לי על הפרויקט שלך…",
+    "phone": "טלפון",
+    "phonePlaceholder": "050-000-0000",
+    "optional": "אופציונלי",
     "nameError": "נא להזין שם (מינימום 2 תווים)",
     "emailError": "נא להזין כתובת אימייל תקינה",
+    "phoneError": "נא להזין מספר טלפון ישראלי תקין",
     "messageError": "נא לכתוב הודעה (מינימום 10 תווים)"
   },
   "footer": {
