@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { useLocale } from 'next-intl'
 import { motion, useReducedMotion } from 'framer-motion'
 import { fadeUp, staggerContainer } from '@/lib/motion'
 import Image from 'next/image'
@@ -17,6 +18,8 @@ type Props = {
 
 export default function ProjectRow({ project, index, liveCta, githubCta }: Props) {
   const prefersReduced = useReducedMotion()
+  const locale = useLocale()
+  const arrow = locale === 'he' ? '↖' : '{arrow}'
   const isEven = index % 2 === 0
   const containerRef = useRef<HTMLDivElement>(null)
   const scrollImgRef = useRef<HTMLImageElement>(null)
@@ -135,12 +138,12 @@ export default function ProjectRow({ project, index, liveCta, githubCta }: Props
         <motion.div variants={prefersReduced ? {} : fadeUp} className="flex flex-wrap gap-3 pt-1">
           {project.liveUrl && (
             <Button href={project.liveUrl} variant="primary">
-              {liveCta} ↗
+              {liveCta} {arrow}
             </Button>
           )}
           {project.githubUrl && (
             <Button href={project.githubUrl} variant="secondary">
-              {githubCta} ↗
+              {githubCta} {arrow}
             </Button>
           )}
         </motion.div>
