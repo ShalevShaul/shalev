@@ -68,7 +68,7 @@ export default function ProjectRow({ project, index, liveCta, githubCta }: Props
               width: '100%',
               height: 'auto',
               transform: `translateY(${isHovered ? translateY : 0}px)`,
-              transition: isHovered ? 'transform 3s ease-in-out' : 'transform 0.6s ease-out',
+              transition: isHovered ? 'transform 6s ease-in-out' : 'transform 0.6s ease-out',
               opacity: isHovered ? 1 : 0,
               pointerEvents: 'none',
             }}
