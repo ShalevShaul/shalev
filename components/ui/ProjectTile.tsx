@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useReducedMotion } from 'framer-motion'
 import { scaleIn } from '@/lib/motion'
+import Image from 'next/image'
 import TechTag from './TechTag'
 import type { ProjectData } from '@/data/projects'
 
@@ -25,8 +26,25 @@ export default function ProjectTile({ project, githubCta }: Props) {
   return (
     <motion.article
       variants={prefersReduced ? {} : scaleIn}
-      className="group flex flex-col rounded-2xl border border-border bg-surface p-6 transition-all duration-300 hover:border-accent/35 hover:shadow-card-hover"
+      className="group flex flex-col rounded-2xl border border-border bg-surface overflow-hidden transition-all duration-300 hover:border-accent/35 hover:shadow-card-hover"
     >
+      {project.image ? (
+        <div className="relative aspect-video w-full overflow-hidden">
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-fill transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+        </div>
+      ) : (
+        <div className="flex aspect-video w-full items-center justify-center bg-linear-to-br from-accent/20 via-surface-2 to-accent-alt/10">
+          <span className="font-mono text-[12px] text-text-muted/40">{project.title}</span>
+        </div>
+      )}
+
+      <div className="flex flex-col p-6">
       <div className="mb-4 flex items-start justify-between gap-4">
         <h3 className="text-[17px] font-semibold leading-snug text-text-primary">{project.title}</h3>
         {project.githubUrl && (
@@ -48,6 +66,7 @@ export default function ProjectTile({ project, githubCta }: Props) {
         {project.tech.slice(0, 3).map((tag) => (
           <TechTag key={tag} label={tag} />
         ))}
+      </div>
       </div>
     </motion.article>
   )

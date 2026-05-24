@@ -55,6 +55,19 @@ export const projects: ProjectData[] = [
     featured: true,
   },
   {
+    slug: 'tourvisto',
+    title: 'Tourvisto',
+    role: 'Full-Stack Developer',
+    year: '2025',
+    overview:
+      'A travel booking platform with Google OAuth, role-based access, and an admin panel to create trips and manage users. Users can browse trips, book, and pay via Stripe. New trips can be generated with AI.',
+    tech: ['React', 'TypeScript', 'Appwrite', 'Stripe'],
+    image: '/projects/tourvisto.png',
+    liveUrl: 'https://travel-agency-navy-five.vercel.app/',
+    githubUrl: 'https://github.com/ShalevShaul/travel-agency',
+    featured: false,
+  },
+  {
     slug: 'project-three',
     title: 'Project Three',
     role: 'Frontend Developer',
