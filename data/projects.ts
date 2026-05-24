@@ -92,37 +92,4 @@ export const projects: ProjectData[] = [
     githubUrl: 'https://github.com/ShalevShaul/vacations',
     featured: false,
   },
-  {
-    slug: 'project-three',
-    title: 'Project Three',
-    role: 'Frontend Developer',
-    year: '2024',
-    overview:
-      'A smooth, accessible product landing page with scroll-driven animations and an obsessive focus on performance.',
-    tech: ['React', 'Framer Motion', 'Tailwind CSS'],
-    githubUrl: 'https://github.com/shalevshaul',
-    featured: false,
-  },
-  {
-    slug: 'project-four',
-    title: 'Project Four',
-    role: 'Full-Stack Developer',
-    year: '2023',
-    overview:
-      'REST API integration with a React dashboard. Implemented real-time data filtering, custom chart components, and a responsive layout.',
-    tech: ['Next.js', 'TypeScript', 'REST APIs'],
-    githubUrl: 'https://github.com/shalevshaul',
-    featured: false,
-  },
-  {
-    slug: 'project-five',
-    title: 'Project Five',
-    role: 'Frontend Developer',
-    year: '2023',
-    overview:
-      'Component library with a full Storybook setup, design tokens, and automated visual regression testing.',
-    tech: ['React', 'TypeScript', 'Storybook'],
-    githubUrl: 'https://github.com/shalevshaul',
-    featured: false,
-  },
 ]
