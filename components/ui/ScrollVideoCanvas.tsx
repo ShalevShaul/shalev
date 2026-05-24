@@ -56,13 +56,17 @@ export function ScrollVideoCanvas({ scrollYProgress, reducedMotion }: Props) {
 
     syncSize()
     video.addEventListener('loadeddata', draw)
+    video.addEventListener('canplay', draw)
     video.addEventListener('seeked', onSeeked)
 
     const ro = new ResizeObserver(syncSize)
     if (canvas.parentElement) ro.observe(canvas.parentElement)
 
+    video.load()
+
     return () => {
       video.removeEventListener('loadeddata', draw)
+      video.removeEventListener('canplay', draw)
       video.removeEventListener('seeked', onSeeked)
       ro.disconnect()
     }
@@ -71,7 +75,7 @@ export function ScrollVideoCanvas({ scrollYProgress, reducedMotion }: Props) {
   useMotionValueEvent(scrollYProgress, 'change', (progress) => {
     if (reducedMotion) return
     const video = videoRef.current
-    if (!video || video.readyState < 2 || seekingRef.current) return
+    if (!video || video.readyState < 1 || seekingRef.current) return
     seekingRef.current = true
     video.currentTime = progress * video.duration
   })
