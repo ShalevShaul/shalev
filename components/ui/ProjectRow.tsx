@@ -19,7 +19,7 @@ type Props = {
 export default function ProjectRow({ project, index, liveCta, githubCta }: Props) {
   const prefersReduced = useReducedMotion()
   const locale = useLocale()
-  const arrow = locale === 'he' ? '↖' : '{arrow}'
+  const arrow = locale === 'he' ? '↖' : '↗'
   const isEven = index % 2 === 0
   const containerRef = useRef<HTMLDivElement>(null)
   const scrollImgRef = useRef<HTMLImageElement>(null)
