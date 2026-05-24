@@ -68,6 +68,18 @@ export const projects: ProjectData[] = [
     featured: false,
   },
   {
+    slug: 'pinto-clinic',
+    title: 'Pinto Clinic',
+    role: 'Full-Stack Developer',
+    year: '2026',
+    overview:
+      'A dental clinic website with services, treatments, staff profiles, and a contact form that sends inquiries directly to the clinic via EmailJS. Full bilingual EN/HE support and a dedicated page per treatment.',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+    image: '/projects/pinto.png',
+    liveUrl: 'https://pintoclinic.co.il',
+    featured: false,
+  },
+  {
     slug: 'project-three',
     title: 'Project Three',
     role: 'Frontend Developer',
