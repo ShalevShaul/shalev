@@ -32,22 +32,22 @@
   },
   "services": {
     "title": "Services",
-    "subtitle": "What I can do for you.",
+    "subtitle": "No fluff. Just what you actually need.",
     "webDev": {
-      "title": "Web Development",
-      "description": "End-to-end web applications — from architecture to deployment. Clean code, modern stack, production-ready."
+      "title": "Full-Stack Development",
+      "description": "From idea to production — the shortest path that doesn't break at 3am. I pick the stack that solves the problem, not the one that looks good in a slide deck."
     },
     "uiDesign": {
-      "title": "UI/UX Design",
-      "description": "Interfaces that are beautiful, intuitive, and accessible. Design systems, prototypes, and pixel-perfect implementation."
+      "title": "Interface Design",
+      "description": "The interface is the product. I design for real users, not for Dribbble — accessible, fast, and the kind of UI that earns trust without asking for it."
     },
     "branding": {
       "title": "Branding & Identity",
-      "description": "Visual identity systems — logos, colour palettes, typography, and brand guidelines that communicate the right story."
+      "description": "A logo is the easy part. What I actually build is a system — the visual language and rules that keep your brand consistent from a business card to a billboard."
     },
     "consulting": {
       "title": "Technical Consulting",
-      "description": "Architecture reviews, tech stack decisions, code audits, and hands-on mentoring for teams and founders."
+      "description": "If your codebase keeps you up at night, let's talk. I'll tell you what actually needs fixing — not everything, just the parts that matter — and give you a clear path forward."
     }
   },
   "projects": {
