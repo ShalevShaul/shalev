@@ -27,7 +27,7 @@ export default function Hero() {
   const itemVariants = prefersReduced ? {} : fadeUp
 
   return (
-    <section id="hero" className="relative flex min-h-svh items-center pt-16">
+    <section id="hero" className="relative flex min-h-svh items-center">
       <div className="mx-auto w-full max-w-6xl px-4 py-20 lg:px-6">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           {/* Text block */}
