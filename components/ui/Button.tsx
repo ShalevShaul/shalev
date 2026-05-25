@@ -42,7 +42,7 @@ export default function Button({
 
   if ('href' in props && props.href) {
     return (
-      <a href={props.href} className={classes} target="_blank" rel="noopener noreferrer">
+      <a href={props.href} className={classes} rel="noopener noreferrer">
         {children}
       </a>
     )
