@@ -209,7 +209,7 @@ export default function Navbar() {
 
               <div className="flex items-center gap-7">
                 <a
-                  href="https://linkedin.com/in/shalevshaul"
+                  href="https://www.linkedin.com/in/shalev-shaul-5843772a3"
                   aria-label={tA11y('linkedin')}
                   target="_blank"
                   rel="noopener noreferrer"
