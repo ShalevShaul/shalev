@@ -85,7 +85,7 @@ export default function ProjectTile({ project, githubCta }: Props) {
       <p className="mb-4 flex-1 text-[14px] leading-[1.7] text-text-muted">{project.overview}</p>
 
       <div className="flex flex-wrap gap-2">
-        {project.tech.slice(0, 3).map((tag) => (
+        {project.tech.map((tag) => (
           <TechTag key={tag} label={tag} />
         ))}
       </div>

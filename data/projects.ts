@@ -16,7 +16,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'pare',
     title: 'PARE',
-    role: 'Full-Stack Developer',
+    role: 'Full-Stack',
     year: '2026',
     overview:
       'A full-featured expense and income management app. Track transactions by date, manage recurring expenses, group by categories, and generate financial reports — income vs. expenses, category breakdowns, top 5 costs, and CSV/PDF export.',
@@ -30,7 +30,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'little-lemon',
     title: 'Little Lemon Restaurant',
-    role: 'Frontend Developer',
+    role: 'Frontend',
     year: '2025',
     overview:
       'A restaurant website for Little Lemon featuring signature dishes, customer reviews, and a full table reservation flow — with booking tracking, confirmation emails, and calendar integration.',
@@ -44,7 +44,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'storeit',
     title: 'StoreIt',
-    role: 'Full-Stack Developer',
+    role: 'Full-Stack',
     year: '2025',
     overview:
       'A cloud storage platform with user authentication, file management — upload, delete, rename, download, and share files with other users. Supports documents, images, and media with built-in search.',
@@ -57,7 +57,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'tourvisto',
     title: 'Tourvisto',
-    role: 'Full-Stack Developer',
+    role: 'Full-Stack',
     year: '2025',
     overview:
       'A travel booking platform with Google OAuth, role-based access, and an admin panel to create trips and manage users. Users can browse trips, book, and pay via Stripe. New trips can be generated with AI.',
@@ -70,7 +70,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'pinto-clinic',
     title: 'Pinto Clinic',
-    role: 'Full-Stack Developer',
+    role: 'Frontend',
     year: '2026',
     overview:
       'A dental clinic website with services, treatments, staff profiles, and a contact form that sends inquiries directly to the clinic via EmailJS. Full bilingual EN/HE support and a dedicated page per treatment.',
@@ -82,11 +82,11 @@ export const projects: ProjectData[] = [
   {
     slug: 'vacations',
     title: 'Vacations',
-    role: 'Full-Stack Developer',
+    role: 'Full-Stack',
     year: '2025',
     overview:
       'A full-stack vacation management app with role-based access. Users browse, filter, and follow vacations. Admins add, edit, delete trips, view follower stats in a chart, and export data to CSV. Auth via JWT.',
-    tech: ['React', 'TypeScript', 'Node.js', 'MySQL'],
+    tech: ['React', 'TypeScript', 'Node.js', 'Express.js', 'MySQL'],
     image: '/projects/vacations.png',
     liveUrl: 'https://vacations-five.vercel.app',
     githubUrl: 'https://github.com/ShalevShaul/vacations',

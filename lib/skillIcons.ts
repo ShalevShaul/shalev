@@ -23,6 +23,9 @@ import {
   siFigma,
   siAnthropic,
   siResend,
+  siVite,
+  siAppwrite,
+  siStripe,
 } from 'simple-icons'
 import type { SimpleIcon } from 'simple-icons'
 
@@ -51,4 +54,35 @@ export const SKILL_ICONS: Record<string, SimpleIcon> = {
   figma: siFigma,
   anthropic: siAnthropic,
   resend: siResend,
+  vite: siVite,
+  appwrite: siAppwrite,
+  stripe: siStripe,
+}
+
+export const TECH_LABEL_TO_KEY: Record<string, string> = {
+  'React': 'react',
+  'Next.js': 'nextjs',
+  'TypeScript': 'typescript',
+  'Tailwind CSS': 'tailwindcss',
+  'Framer Motion': 'framer',
+  'HTML5': 'html5',
+  'CSS': 'css',
+  'SCSS': 'sass',
+  'JavaScript': 'javascript',
+  'jQuery': 'jquery',
+  'Node.js': 'nodejs',
+  'Express.js': 'express',
+  'Supabase': 'supabase',
+  'PostgreSQL': 'postgresql',
+  'MySQL': 'mysql',
+  'Sanity': 'sanity',
+  'n8n': 'n8n',
+  'Postman': 'postman',
+  'Git': 'git',
+  'GitHub': 'github',
+  'Vercel': 'vercel',
+  'Figma': 'figma',
+  'Vite': 'vite',
+  'Appwrite': 'appwrite',
+  'Stripe': 'stripe',
 }
