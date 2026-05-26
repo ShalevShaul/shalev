@@ -69,8 +69,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isHe = locale === 'he'
 
   const title = isHe
-    ? 'שלו שאול — מפתח Full-Stack'
-    : 'Shalev Shaul — Full-Stack Developer'
+    ? 'שלו שאול - מפתח Full-Stack'
+    : 'Shalev Shaul - Full-Stack Developer'
 
   const description = isHe
     ? 'מפתח פול סטאק המתמחה בעיצוב UI/UX, אנימציה ואדריכלות ווב מודרנית. פרילנסר זמין לפרויקטים.'
