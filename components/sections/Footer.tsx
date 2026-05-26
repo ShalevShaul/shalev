@@ -4,6 +4,16 @@ import { useTranslations } from 'next-intl'
 
 const NAV_LINKS = ['about', 'skills', 'services', 'projects', 'contact'] as const
 
+function SLogo() {
+  return (
+    <svg width="447" height="541" viewBox="0 0 447 541" fill="currentColor" aria-hidden="true" className="h-6 w-auto">
+      <path d="M259 189V172L264 169H269.5L446 280V412L241 541H235L223 530V525L423 399V294L259 190V189Z" />
+      <path d="M153.5 455L8.5 365.5L1 368V386.767L148.5 480H156.5L332 366V331.5L125 196V185.5L288 84H289H290L439 179H444L447 176V157L293 58H285L101 174V207V208L308 342L310 344V352.5L153.5 455Z" />
+      <path d="M175 341V360L171 363H165L0 260V123L195 0H200.5L213 13V17L23 136V245.857L175 341Z" />
+    </svg>
+  )
+}
+
 function GitHubIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -34,9 +44,10 @@ export default function Footer() {
           <div>
             <a
               href="#hero"
-              className="text-[15px] font-semibold tracking-[-0.01em] text-text-primary transition-colors duration-200 hover:text-accent"
+              aria-label="Home"
+              className="text-text-muted transition-colors duration-200 hover:text-text-primary"
             >
-              Shalev Shaul
+              <SLogo />
             </a>
           </div>
 
@@ -68,7 +79,7 @@ export default function Footer() {
               <GitHubIcon />
             </a>
             <a
-              href="https://linkedin.com/in/shalevshaul"
+              href="https://www.linkedin.com/in/shalev-shaul-5843772a3"
               target="_blank"
               rel="noopener noreferrer"
               aria-label={tA11y('linkedin')}
@@ -83,7 +94,6 @@ export default function Footer() {
           <p className="text-[13px] text-text-muted">
             © {year} Shalev Shaul. {tFooter('rights')}
           </p>
-          <p className="text-[13px] text-text-muted">{tFooter('builtWith')}</p>
         </div>
       </div>
     </footer>

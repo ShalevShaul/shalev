@@ -80,8 +80,7 @@
     "messageError": "Please write a message (min. 10 characters)"
   },
   "footer": {
-    "rights": "All rights reserved.",
-    "builtWith": "Built with Next.js"
+    "rights": "All rights reserved."
   },
   "a11y": {
     "themeToggle": "Toggle theme",
