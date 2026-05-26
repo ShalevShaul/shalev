@@ -1,22 +1,62 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useReducedMotion, useScroll } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import SectionWrapper from '@/components/ui/SectionWrapper'
 import SectionHeader from '@/components/ui/SectionHeader'
-import { ScrollVideoCanvas } from '@/components/ui/ScrollVideoCanvas'
+import { PixelatedCanvas } from '@/components/ui/PixelatedCanvas'
 import { fadeUp, staggerContainer } from '@/lib/motion'
+
+function PhotoCanvas({ reducedMotion }: { reducedMotion: boolean }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [dims, setDims] = useState({ width: 400, height: 520 })
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const ro = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect
+      if (width > 0 && height > 0) {
+        setDims({ width: Math.round(width), height: Math.round(height) })
+      }
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  return (
+    <div ref={containerRef} className="absolute inset-0">
+      <PixelatedCanvas
+        src="/me.jpg"
+        width={dims.width}
+        height={dims.height}
+        cellSize={5}
+        dotScale={0.9}
+        shape="square"
+        backgroundColor="#000000"
+        interactive={!reducedMotion}
+        distortionMode="swirl"
+        distortionStrength={3}
+        distortionRadius={80}
+        objectFit="cover"
+        tintColor="#FFFFFF"
+        tintStrength={0.1}
+        dropoutStrength={0.2}
+        jitterStrength={5}
+        jitterSpeed={2}
+        followSpeed={0.3}
+        maxFps={30}
+        sampleAverage
+        fadeOnLeave
+      />
+    </div>
+  )
+}
 
 export default function About() {
   const t = useTranslations('about')
   const prefersReduced = useReducedMotion() ?? false
-  const boxRef = useRef<HTMLDivElement>(null)
-
-  const { scrollYProgress } = useScroll({
-    target: boxRef,
-    offset: ['start end', 'end start'],
-  })
 
   const fade = prefersReduced ? {} : fadeUp
   const stagger = prefersReduced ? {} : staggerContainer
@@ -32,12 +72,12 @@ export default function About() {
           </motion.p>
         </div>
 
-        {/* Right: scroll video — spinning border */}
+        {/* Right: pixelated photo */}
         <motion.div
           variants={stagger}
           className="relative rounded-3xl p-0.5 dark:p-px overflow-hidden"
         >
-          {/* Spinning conic gradient — scaled up so corners stay covered while rotating */}
+          {/* Spinning conic gradient border */}
           <div
             className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[150%] -translate-x-1/2 -translate-y-1/2"
             style={{
@@ -46,13 +86,8 @@ export default function About() {
             }}
             aria-hidden="true"
           />
-          <div
-            ref={boxRef}
-            className="relative z-10 overflow-hidden rounded-[23px] bg-surface-2 min-h-96 lg:min-h-130"
-          >
-            <ScrollVideoCanvas scrollYProgress={scrollYProgress} reducedMotion={prefersReduced} />
-            <div className="pointer-events-none absolute inset-0 bg-white/40 dark:hidden" aria-hidden="true" />
-            <div className="pointer-events-none absolute inset-0 hidden dark:block bg-black/40" aria-hidden="true" />
+          <div className="relative z-10 overflow-hidden rounded-[23px] bg-surface-2 min-h-96 lg:min-h-130">
+            <PhotoCanvas reducedMotion={prefersReduced} />
           </div>
         </motion.div>
       </div>
