@@ -103,14 +103,6 @@ export default function ProjectRow({ project, index, liveCta, githubCta }: Props
 
       {/* Details */}
       <motion.div variants={prefersReduced ? {} : staggerContainer} className="flex flex-col gap-5">
-        <motion.div variants={prefersReduced ? {} : fadeUp} className="flex items-center gap-3">
-          <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">
-            {String(index + 1).padStart(2, '0')}
-          </span>
-          <span className="h-px flex-1 bg-border" aria-hidden="true" />
-          <span className="font-mono text-[12px] text-text-muted">{project.year}</span>
-        </motion.div>
-
         <motion.h3
           variants={prefersReduced ? {} : fadeUp}
           className="text-[28px] font-bold leading-[1.1] tracking-[-0.02em] text-text-primary lg:text-[34px]"
