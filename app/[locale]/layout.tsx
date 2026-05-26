@@ -69,12 +69,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isHe = locale === 'he'
 
   const title = isHe
-    ? 'שלו שאול - מפתח Full-Stack'
-    : 'Shalev Shaul - Full-Stack Developer'
+    ? 'שלו שאול - מפתח Full-Stack ומעצב UI/UX'
+    : 'Shalev Shaul - Full-Stack Developer & UI/UX Designer'
 
   const description = isHe
-    ? 'מפתח פול סטאק המתמחה בעיצוב UI/UX, אנימציה ואדריכלות ווב מודרנית. פרילנסר זמין לפרויקטים.'
-    : 'Full-Stack Developer specialising in UI/UX, animation, and modern web architecture.'
+    ? 'מפתח פול סטאק המתמחה בעיצוב UI/UX, אנימציה ואדריכלות ווב מודרנית. בונה חוויות דיגיטליות מהירות, יפות ונגישות. פרילנסר זמין לפרויקטים.'
+    : 'Full-Stack Developer specialising in UI/UX, animation, and modern web architecture. Building fast, beautiful, and accessible digital experiences.'
 
   const keywords = isHe
     ? [
@@ -144,11 +144,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       alternateLocale: isHe ? 'en_US' : 'he_IL',
       images: [
         {
-          url: '/og-image.png',
+          url: '/og-image.webp',
           width: 1200,
           height: 630,
           alt: 'Shalev Shaul — Full-Stack Developer',
-          type: 'image/png',
+          type: 'image/webp',
         },
       ],
     },
