@@ -30,6 +30,13 @@ function LinkedInIcon() {
   )
 }
 
+const glassStyle = {
+  background: 'var(--navbar-glass-bg)',
+  boxShadow: 'inset 0 0 0 1px var(--navbar-glass-border), var(--navbar-glass-shadow)',
+  backdropFilter: 'blur(8px) saturate(160%)',
+  WebkitBackdropFilter: 'blur(8px) saturate(160%)',
+} as const
+
 export default function Footer() {
   const t = useTranslations('nav')
   const tFooter = useTranslations('footer')
@@ -37,8 +44,8 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-border bg-surface-2">
-      <div className="mx-auto max-w-6xl px-4 py-12 lg:px-6">
+    <footer className="px-4 pb-4 lg:px-6">
+      <div style={glassStyle} className="mx-auto max-w-6xl rounded-2xl px-5 py-8">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           {/* Brand */}
           <div>
@@ -90,7 +97,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-1 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-1 border-t border-border/50 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[13px] text-text-muted">
             © {year} Shalev Shaul. {tFooter('rights')}
           </p>
