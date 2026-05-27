@@ -10,13 +10,13 @@
   "hero": {
     "role": "Full-Stack Developer",
     "name": "Shalev Shaul",
-    "tagline": "Design and development at the highest level — with precise user experience and uncompromising performance.",
+    "tagline": "Design and development at the highest level - with precise user experience and uncompromising performance.",
     "cta": "View Work"
   },
   "about": {
     "title": "About",
     "subtitle": "More than a developer.",
-    "body": "A Full-Stack developer with a passion for building modern digital experiences — ones that don't just work great, but feel precise in every detail.\nI combine development, design, and UX to create fast, accessible, and highly polished websites and applications."
+    "body": "A Full-Stack developer with a passion for building modern digital experiences - ones that don't just work great, but feel precise in every detail.\nI combine development, design, and UX to create fast, accessible, and highly polished websites and applications."
   },
   "skills": {
     "title": "Skills",
@@ -27,7 +27,7 @@
     "subtitle": "No fluff. Just what you actually need.",
     "webDev": {
       "title": "Full-Stack Development",
-      "description": "Modern development with performance, maintainability, and scale in mind from day one — so the product doesn't just work today, but can grow the right way down the line."
+      "description": "Modern development with performance, maintainability, and scale in mind from day one - so the product doesn't just work today, but can grow the right way down the line."
     },
     "uiDesign": {
       "title": "Interface Design",
@@ -35,7 +35,7 @@
     },
     "performance": {
       "title": "Performance & Optimisation",
-      "description": "A beautiful site isn't enough. I make sure it's fast, accessible, and ready for the real world — with a smooth user experience and uncompromising performance."
+      "description": "A beautiful site isn't enough. I make sure it's fast, accessible, and ready for the real world - with a smooth user experience and uncompromising performance."
     },
     "consulting": {
       "title": "Technical Consulting",
