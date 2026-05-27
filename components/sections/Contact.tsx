@@ -140,6 +140,7 @@ export default function Contact() {
                 inputMode="numeric"
                 autoComplete="tel"
                 maxLength={10}
+                dir={locale === 'he' ? 'rtl' : 'ltr'}
                 placeholder={t('phonePlaceholder')}
                 aria-invalid={errors.phone ? 'true' : 'false'}
                 aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
