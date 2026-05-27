@@ -10,21 +10,13 @@
   "hero": {
     "role": "Full-Stack Developer",
     "name": "Shalev Shaul",
-    "tagline": "I build exceptional digital experiences at the intersection of design and engineering.",
-    "cta": "View Work",
-    "scrollHint": "Scroll to explore"
+    "tagline": "Design and development at the highest level — with precise user experience and uncompromising performance.",
+    "cta": "View Work"
   },
   "about": {
     "title": "About",
-    "subtitle": "The person behind the code.",
-    "body": "I'm a full-stack developer with a strong eye for design — I care as much about how things look as how they work. I specialise in building fast, accessible, and visually refined web applications.",
-    "resumeCta": "Download CV",
-    "stat1Value": "3+",
-    "stat1Label": "Years Experience",
-    "stat2Value": "20+",
-    "stat2Label": "Projects Shipped",
-    "stat3Value": "100%",
-    "stat3Label": "Client Satisfaction"
+    "subtitle": "More than a developer.",
+    "body": "A Full-Stack developer with a passion for building modern digital experiences — ones that don't just work great, but feel precise in every detail.\nI combine development, design, and UX to create fast, accessible, and highly polished websites and applications."
   },
   "skills": {
     "title": "Skills",
@@ -35,28 +27,28 @@
     "subtitle": "No fluff. Just what you actually need.",
     "webDev": {
       "title": "Full-Stack Development",
-      "description": "From idea to production — the shortest path that doesn't break at 3am. I pick the stack that solves the problem, not the one that looks good in a slide deck."
+      "description": "Modern development with performance, maintainability, and scale in mind from day one — so the product doesn't just work today, but can grow the right way down the line."
     },
     "uiDesign": {
       "title": "Interface Design",
-      "description": "The interface is the product. I design for real users, not for Dribbble — accessible, fast, and the kind of UI that earns trust without asking for it."
+      "description": "Good UI doesn't need to explain itself. I design interfaces that feel natural, clear, and fast to use from the very first interaction."
     },
-    "branding": {
-      "title": "Branding & Identity",
-      "description": "A logo is the easy part. What I actually build is a system — the visual language and rules that keep your brand consistent from a business card to a billboard."
+    "performance": {
+      "title": "Performance & Optimisation",
+      "description": "A beautiful site isn't enough. I make sure it's fast, accessible, and ready for the real world — with a smooth user experience and uncompromising performance."
     },
     "consulting": {
       "title": "Technical Consulting",
-      "description": "If your codebase keeps you up at night, let's talk. I'll tell you what actually needs fixing — not everything, just the parts that matter — and give you a clear path forward."
+      "description": "Good technical decisions today save big problems tomorrow. I help build a solid foundation that keeps your product stable, organised, and easy to maintain over time."
     }
   },
   "projects": {
     "title": "Projects",
-    "subtitle": "Selected work — built with care.",
-    "liveCta": "Live Site",
+    "subtitle": "Websites and digital products built to a high standard of craft.",
+    "liveCta": "Visit Site",
     "githubCta": "Source",
     "otherTitle": "More Projects",
-    "otherSubtitle": "Other things I've built."
+    "otherSubtitle": "More work that shows how I think and build."
   },
   "contact": {
     "title": "Contact",
@@ -76,7 +68,7 @@
     "optional": "optional",
     "nameError": "Please enter your name (min. 2 characters)",
     "emailError": "Please enter a valid email address",
-    "phoneError": "Please enter a valid Israeli phone number",
+    "phoneError": "Please enter a valid phone number",
     "messageError": "Please write a message (min. 10 characters)"
   },
   "footer": {
