@@ -28,7 +28,7 @@ function PhotoCanvas({ reducedMotion }: { reducedMotion: boolean }) {
   return (
     <div ref={containerRef} className="absolute inset-0">
       <PixelatedCanvas
-        src="/me.jpg"
+        src="/me.webp"
         width={dims.width}
         height={dims.height}
         cellSize={5}

@@ -21,8 +21,8 @@ export const projects: ProjectData[] = [
     overview:
       'A full-featured expense and income management app. Track transactions by date, manage recurring expenses, group by categories, and generate financial reports — income vs. expenses, category breakdowns, top 5 costs, and CSV/PDF export.',
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express.js', 'PostgreSQL'],
-    image: '/projects/pare.png',
-    imageScroll: '/projects/pare-full.png',
+    image: '/projects/pare.webp',
+    imageScroll: '/projects/pare-full.webp',
     liveUrl: 'https://pare-three.vercel.app/',
     githubUrl: 'https://github.com/ShalevShaul/PARE',
     featured: true,
@@ -35,8 +35,8 @@ export const projects: ProjectData[] = [
     overview:
       'A restaurant website for Little Lemon featuring signature dishes, customer reviews, and a full table reservation flow — with booking tracking, confirmation emails, and calendar integration.',
     tech: ['React', 'TypeScript', 'Vite', 'SCSS'],
-    image: '/projects/lemon.png',
-    imageScroll: '/projects/lemo-full.png',
+    image: '/projects/lemon.webp',
+    imageScroll: '/projects/lemo-full.webp',
     liveUrl: 'https://little-lemon-reserve.vercel.app/',
     githubUrl: 'https://github.com/ShalevShaul/little-lemon',
     featured: true,
@@ -49,7 +49,7 @@ export const projects: ProjectData[] = [
     overview:
       'A cloud storage platform with user authentication, file management — upload, delete, rename, download, and share files with other users. Supports documents, images, and media with built-in search.',
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Appwrite'],
-    image: '/projects/storeit.png',
+    image: '/projects/storeit.webp',
     liveUrl: 'https://store-it-storage-management.vercel.app',
     githubUrl: 'https://github.com/ShalevShaul/storeIt',
     featured: true,
@@ -62,7 +62,7 @@ export const projects: ProjectData[] = [
     overview:
       'A travel booking platform with Google OAuth, role-based access, and an admin panel to create trips and manage users. Users can browse trips, book, and pay via Stripe. New trips can be generated with AI.',
     tech: ['React', 'TypeScript', 'Appwrite', 'Stripe'],
-    image: '/projects/tourvisto.png',
+    image: '/projects/tourvisto.webp',
     liveUrl: 'https://travel-agency-navy-five.vercel.app/',
     githubUrl: 'https://github.com/ShalevShaul/travel-agency',
     featured: false,
@@ -75,7 +75,7 @@ export const projects: ProjectData[] = [
     overview:
       'A dental clinic website with services, treatments, staff profiles, and a contact form that sends inquiries directly to the clinic via EmailJS. Full bilingual EN/HE support and a dedicated page per treatment.',
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS'],
-    image: '/projects/pinto.png',
+    image: '/projects/pinto.webp',
     liveUrl: 'https://pintoclinic.co.il',
     featured: false,
   },
@@ -87,7 +87,7 @@ export const projects: ProjectData[] = [
     overview:
       'A full-stack vacation management app with role-based access. Users browse, filter, and follow vacations. Admins add, edit, delete trips, view follower stats in a chart, and export data to CSV. Auth via JWT.',
     tech: ['React', 'TypeScript', 'Node.js', 'Express.js', 'MySQL'],
-    image: '/projects/vacations.png',
+    image: '/projects/vacations.webp',
     liveUrl: 'https://vacations-five.vercel.app',
     githubUrl: 'https://github.com/ShalevShaul/vacations',
     featured: false,
