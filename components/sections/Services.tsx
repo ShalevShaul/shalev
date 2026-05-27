@@ -25,11 +25,11 @@ function DesignIcon() {
   )
 }
 
-function BrandingIcon() {
+function PerformanceIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="10" />
-      <path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32" />
+      <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+      <circle cx="12" cy="12" r="3" />
     </svg>
   )
 }
@@ -45,11 +45,11 @@ function ConsultingIcon() {
 const SERVICE_ICONS = {
   webDev: <CodeIcon />,
   uiDesign: <DesignIcon />,
-  branding: <BrandingIcon />,
+  performance: <PerformanceIcon />,
   consulting: <ConsultingIcon />,
 } as const
 
-const SERVICE_KEYS = ['webDev', 'uiDesign', 'branding', 'consulting'] as const
+const SERVICE_KEYS = ['webDev', 'uiDesign', 'performance', 'consulting'] as const
 type ServiceKey = (typeof SERVICE_KEYS)[number]
 const N = SERVICE_KEYS.length
 
