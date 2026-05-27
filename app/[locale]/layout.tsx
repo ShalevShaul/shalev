@@ -162,7 +162,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      creator: '@shalevshaul',
+      creator: '@Shalev_Shaul1',
       images: ['/og-image.jpg'],
     },
     icons: {
