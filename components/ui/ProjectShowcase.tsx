@@ -187,14 +187,14 @@ export default function ProjectShowcase({ projects, githubCta }: Props) {
           <button
             onClick={prev}
             aria-label="Previous project"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-muted transition-all duration-200 hover:border-accent/50 hover:text-accent"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-muted transition-all duration-200 hover:border-accent/50 hover:text-accent rtl:rotate-180"
           >
             <ChevronLeft />
           </button>
           <button
             onClick={next}
             aria-label="Next project"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-muted transition-all duration-200 hover:border-accent/50 hover:text-accent"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-muted transition-all duration-200 hover:border-accent/50 hover:text-accent rtl:rotate-180"
           >
             <ChevronRight />
           </button>
