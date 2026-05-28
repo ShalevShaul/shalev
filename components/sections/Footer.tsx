@@ -1,6 +1,7 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import Link from 'next/link'
+import { useTranslations, useLocale } from 'next-intl'
 
 const NAV_LINKS = ['about', 'skills', 'services', 'projects', 'contact'] as const
 
@@ -41,6 +42,7 @@ export default function Footer() {
   const t = useTranslations('nav')
   const tFooter = useTranslations('footer')
   const tA11y = useTranslations('a11y')
+  const locale = useLocale()
   const year = new Date().getFullYear()
 
   return (
@@ -101,6 +103,12 @@ export default function Footer() {
           <p className="text-[13px] text-text-muted">
             © {year} Shalev Shaul. {tFooter('rights')}
           </p>
+          <Link
+            href={`/${locale}/privacy-policy`}
+            className="text-[13px] text-text-muted transition-colors duration-200 hover:text-text-primary"
+          >
+            {tFooter('privacy')}
+          </Link>
         </div>
       </div>
     </footer>
