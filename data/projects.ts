@@ -7,6 +7,7 @@ export type ProjectData = {
   tech: string[]
   image?: string
   imageScroll?: string
+  scrollDuration?: number
   liveUrl?: string
   githubUrl?: string
   featured: boolean
@@ -23,6 +24,7 @@ export const projects: ProjectData[] = [
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express.js', 'PostgreSQL'],
     image: '/projects/pare.webp',
     imageScroll: '/projects/pare-full.webp',
+    scrollDuration: 8,
     liveUrl: 'https://pare-three.vercel.app/',
     githubUrl: 'https://github.com/ShalevShaul/PARE',
     featured: true,
@@ -37,6 +39,7 @@ export const projects: ProjectData[] = [
     tech: ['React', 'TypeScript', 'Vite', 'SCSS'],
     image: '/projects/lemon.webp',
     imageScroll: '/projects/lemo-full.webp',
+    scrollDuration: 10,
     liveUrl: 'https://little-lemon-reserve.vercel.app/',
     githubUrl: 'https://github.com/ShalevShaul/little-lemon',
     featured: true,
@@ -89,6 +92,7 @@ export const projects: ProjectData[] = [
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
     image: '/projects/shalev.webp',
     imageScroll: '/projects/shalev-full.webp',
+    scrollDuration: 24,
     liveUrl: 'https://shalevshaul.dev',
     githubUrl: 'https://github.com/ShalevShaul/shalev',
     featured: true,
