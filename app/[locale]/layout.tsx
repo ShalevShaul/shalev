@@ -6,6 +6,7 @@ import { getMessages } from 'next-intl/server'
 import { ThemeProvider } from 'next-themes'
 import { Analytics } from '@vercel/analytics/next'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import CookieBanner from '@/components/ui/CookieBanner'
 import { routing } from '@/i18n/routing'
 import '../globals.css'
 
@@ -223,6 +224,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <NextIntlClientProvider messages={messages}>
             {children}
+            <CookieBanner />
           </NextIntlClientProvider>
           <Analytics />
         </ThemeProvider>
