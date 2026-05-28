@@ -119,6 +119,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     description,
     keywords,
+    verification: { google: 'google29e76fb87b725b25' },
     authors: [{ name: 'Shalev Shaul', url: BASE_URL }],
     creator: 'Shalev Shaul',
     publisher: 'Shalev Shaul',
