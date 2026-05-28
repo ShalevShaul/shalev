@@ -33,6 +33,7 @@ export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false)
   const t = useTranslations('a11y')
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), [])
 
   if (!mounted) return <div className="h-9 w-9" aria-hidden="true" />
