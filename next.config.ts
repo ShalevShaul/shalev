@@ -9,6 +9,15 @@ const withBundleAnalyzer = bundleAnalyzer({
 })
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/en',
+        permanent: true,
+      },
+    ]
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
   },
