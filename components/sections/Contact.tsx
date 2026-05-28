@@ -12,6 +12,12 @@ import SectionWrapper from '@/components/ui/SectionWrapper'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Button from '@/components/ui/Button'
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void
+  }
+}
+
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
 const IL_PHONE = /^(05\d{8}|0[2-489]\d{7})$/
@@ -61,6 +67,7 @@ export default function Contact() {
       if (!res.ok) throw new Error('Network error')
       setStatus('success')
       reset()
+      window.gtag?.('event', 'generate_lead')
     } catch {
       setStatus('error')
     }
