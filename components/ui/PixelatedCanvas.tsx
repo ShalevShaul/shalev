@@ -114,7 +114,7 @@ export const PixelatedCanvas: React.FC<PixelatedCanvasProps> = ({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const img = new Image();
+    const img = new Image() as HTMLImageElement & { _cleanup?: () => void };
     img.crossOrigin = "anonymous";
     img.src = src;
 
@@ -498,12 +498,10 @@ export const PixelatedCanvas: React.FC<PixelatedCanvasProps> = ({
         canvasEl.removeEventListener("pointerleave", onPointerLeave);
         if (rafRef.current) cancelAnimationFrame(rafRef.current);
       };
-      (img as any)._cleanup = cleanup;
+      img._cleanup = cleanup;
     };
 
-    img.onerror = () => {
-      console.error("Failed to load image for PixelatedCanvas:", src);
-    };
+    img.onerror = () => {};
 
     if (responsive) {
       const onResize = () => {
@@ -515,13 +513,13 @@ export const PixelatedCanvas: React.FC<PixelatedCanvasProps> = ({
       return () => {
         isCancelled = true;
         window.removeEventListener("resize", onResize);
-        if ((img as any)._cleanup) (img as any)._cleanup();
+        if (img._cleanup) img._cleanup();
       };
     }
 
     return () => {
       isCancelled = true;
-      if ((img as any)._cleanup) (img as any)._cleanup();
+      if (img._cleanup) img._cleanup();
     };
   }, [
     src,
