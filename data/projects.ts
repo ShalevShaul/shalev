@@ -80,6 +80,20 @@ export const projects: ProjectData[] = [
     featured: false,
   },
   {
+    slug: 'shalev-portfolio',
+    title: 'Shalev Portfolio',
+    role: 'Frontend',
+    year: '2026',
+    overview:
+      'Personal portfolio designed and built from scratch to reflect a creative tech director aesthetic. Combines a live 3D WebGL hero, scroll-driven animations, full EN/HE RTL bilingual support, dark/light mode, semantic accessibility, and SEO optimization.',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    image: '/projects/shalev.webp',
+    imageScroll: '/projects/shalev-full.webp',
+    liveUrl: 'https://shalevshaul.dev',
+    githubUrl: 'https://github.com/ShalevShaul/shalev',
+    featured: true,
+  },
+  {
     slug: 'vacations',
     title: 'Vacations',
     role: 'Full-Stack',
