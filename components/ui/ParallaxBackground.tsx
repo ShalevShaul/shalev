@@ -78,13 +78,13 @@ export default function ParallaxBackground() {
       {/* Layer 1 — far, primary indigo, top-left */}
       <motion.div
         style={animated ? { x: mx1, y: y1, willChange: 'transform' } : undefined}
-        className="absolute -left-[25%] -top-[20%] h-[55vh] w-[55vh] rounded-full bg-accent/14 blur-[70px] dark:bg-accent/30 md:h-[75vh] md:w-[75vh] md:blur-[95px]"
+        className="absolute left-[-25%] top-[-20%] h-[55vh] w-[55vh] rounded-full bg-accent/14 blur-[70px] dark:bg-accent/30 md:h-[75vh] md:w-[75vh] md:blur-[95px]"
       />
 
       {/* Layer 2 — mid, indigo, bottom-right */}
       <motion.div
         style={animated ? { x: mx2, y: y2, willChange: 'transform' } : undefined}
-        className="absolute -bottom-[25%] -right-[20%] h-[45vh] w-[45vh] rounded-full bg-accent/11 blur-[60px] dark:bg-accent/23 md:h-[65vh] md:w-[65vh] md:blur-[85px]"
+        className="absolute bottom-[-25%] right-[-20%] h-[45vh] w-[45vh] rounded-full bg-accent/11 blur-[60px] dark:bg-accent/23 md:h-[65vh] md:w-[65vh] md:blur-[85px]"
       />
 
       {/* Layer 3 — near, soft indigo, center-left (desktop only) */}
@@ -96,11 +96,11 @@ export default function ParallaxBackground() {
       {/* Layer 4 — accent-alt warm glow, top-right (desktop only) */}
       <motion.div
         style={animated ? { x: mx4, y: y4, willChange: 'transform' } : undefined}
-        className="absolute -right-[10%] top-[6%] hidden h-[38vh] w-[38vh] rounded-full bg-accent-alt/7 blur-[65px] dark:bg-accent-alt/[0.14] md:block"
+        className="absolute right-[-10%] top-[6%] hidden h-[38vh] w-[38vh] rounded-full bg-accent-alt/7 blur-[65px] dark:bg-accent-alt/[0.14] md:block"
       />
 
       {/* Dot grid — dark mode, desktop only */}
-      <div className="absolute inset-0 hidden opacity-0 dark:opacity-100 md:block [background-image:radial-gradient(circle,rgba(99,102,241,0.065)_1px,transparent_1px)] [background-size:44px_44px]" />
+      <div className="absolute inset-0 hidden opacity-0 dark:opacity-100 md:block bg-[radial-gradient(circle,rgba(99,102,241,0.065)_1px,transparent_1px)] bg-size-[44px_44px]" />
 
       {/* Edge vignette — pulls focus toward the center */}
       <div className="absolute inset-0 opacity-45 [background:radial-gradient(ellipse_88%_88%_at_50%_50%,transparent_52%,var(--bg)_100%)]" />
