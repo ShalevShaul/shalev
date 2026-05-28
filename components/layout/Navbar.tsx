@@ -236,7 +236,7 @@ export default function Navbar() {
                   <EmailIcon />
                 </a>
                 <a
-                  href="https://wa.me/"
+                  href="https://wa.me/972586568674"
                   aria-label={tA11y('whatsapp')}
                   target="_blank"
                   rel="noopener noreferrer"
