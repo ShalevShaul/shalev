@@ -19,7 +19,7 @@ export const projects: ProjectData[] = [
     role: 'Full-Stack',
     year: '2026',
     overview:
-      'A full-featured expense and income management app. Track transactions by date, manage recurring expenses, group by categories, and generate financial reports — income vs. expenses, category breakdowns, top 5 costs, and CSV/PDF export.',
+      'A full-featured expense and income management app. Track transactions by date, manage recurring expenses, group by categories, and generate financial reports - income vs. expenses, category breakdowns, top 5 costs, and CSV/PDF export.',
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express.js', 'PostgreSQL'],
     image: '/projects/pare.webp',
     imageScroll: '/projects/pare-full.webp',
@@ -33,7 +33,7 @@ export const projects: ProjectData[] = [
     role: 'Frontend',
     year: '2025',
     overview:
-      'A restaurant website for Little Lemon featuring signature dishes, customer reviews, and a full table reservation flow — with booking tracking, confirmation emails, and calendar integration.',
+      'A restaurant website for Little Lemon featuring signature dishes, customer reviews, and a full table reservation flow - with booking tracking, confirmation emails, and calendar integration.',
     tech: ['React', 'TypeScript', 'Vite', 'SCSS'],
     image: '/projects/lemon.webp',
     imageScroll: '/projects/lemo-full.webp',
@@ -47,7 +47,7 @@ export const projects: ProjectData[] = [
     role: 'Full-Stack',
     year: '2025',
     overview:
-      'A cloud storage platform with user authentication, file management — upload, delete, rename, download, and share files with other users. Supports documents, images, and media with built-in search.',
+      'A cloud storage platform with user authentication, file management - upload, delete, rename, download, and share files with other users. Supports documents, images, and media with built-in search.',
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Appwrite'],
     image: '/projects/storeit.webp',
     liveUrl: 'https://store-it-storage-management.vercel.app',
