@@ -11,8 +11,9 @@ export default function TechTag({ label }: Props) {
   if (icon) {
     return (
       <span
-        title={label}
+        role="img"
         aria-label={label}
+        title={label}
         className="flex items-center justify-center rounded-full border border-border bg-surface p-2 text-text-muted transition-colors duration-200 hover:border-accent/40 hover:text-text-primary"
       >
         <svg
