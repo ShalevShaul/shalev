@@ -60,6 +60,7 @@ export default function ProjectRow({ project, index, liveCta, githubCta }: Props
         className={`relative aspect-video overflow-hidden rounded-2xl border border-border bg-surface-2 ${isEven ? '' : 'lg:order-last'}`}
       >
         {project.imageScroll && (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             ref={scrollImgRef}
             src={project.imageScroll}
