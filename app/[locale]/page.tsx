@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import Navbar from '@/components/layout/Navbar'
 import GrainOverlay from '@/components/ui/GrainOverlay'
+import ParallaxBackground from '@/components/ui/ParallaxBackground'
 import Hero from '@/components/sections/Hero'
 import About from '@/components/sections/About'
 import Skills from '@/components/sections/Skills'
@@ -14,6 +15,7 @@ export default async function HomePage() {
   const t = await getTranslations('a11y')
   return (
     <>
+      <ParallaxBackground />
       <GrainOverlay />
       <Navbar />
       <a
@@ -22,7 +24,7 @@ export default async function HomePage() {
       >
         {t('skipToMain')}
       </a>
-      <main id="main-content">
+      <main id="main-content" className="relative z-1">
         <Hero />
         <About />
         <Skills />
