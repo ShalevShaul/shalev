@@ -75,7 +75,7 @@ export default function About() {
         {/* Right: pixelated photo */}
         <motion.div
           variants={stagger}
-          className="relative rounded-3xl p-0.5 dark:p-px overflow-hidden"
+          className="relative rounded-full p-0.5 dark:p-px overflow-hidden mx-auto w-80 lg:w-110"
         >
           {/* Spinning conic gradient border */}
           <div
@@ -86,7 +86,7 @@ export default function About() {
             }}
             aria-hidden="true"
           />
-          <div className="relative z-10 overflow-hidden rounded-[23px] bg-surface-2 min-h-96 lg:min-h-130">
+          <div className="relative z-10 overflow-hidden rounded-full bg-surface-2 aspect-square w-full">
             <PhotoCanvas reducedMotion={prefersReduced} />
           </div>
         </motion.div>
