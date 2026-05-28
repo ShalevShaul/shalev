@@ -1,5 +1,3 @@
-'use client'
-
 type BaseProps = {
   variant?: 'primary' | 'secondary'
   children: React.ReactNode

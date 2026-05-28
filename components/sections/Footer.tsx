@@ -1,7 +1,5 @@
-'use client'
-
 import Link from 'next/link'
-import { useTranslations, useLocale } from 'next-intl'
+import { getTranslations, getLocale } from 'next-intl/server'
 
 const NAV_LINKS = ['about', 'skills', 'services', 'projects', 'contact'] as const
 
@@ -38,11 +36,13 @@ const glassStyle = {
   WebkitBackdropFilter: 'blur(8px) saturate(160%)',
 } as const
 
-export default function Footer() {
-  const t = useTranslations('nav')
-  const tFooter = useTranslations('footer')
-  const tA11y = useTranslations('a11y')
-  const locale = useLocale()
+export default async function Footer() {
+  const [t, tFooter, tA11y, locale] = await Promise.all([
+    getTranslations('nav'),
+    getTranslations('footer'),
+    getTranslations('a11y'),
+    getLocale(),
+  ])
   const year = new Date().getFullYear()
 
   return (
@@ -51,13 +51,13 @@ export default function Footer() {
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           {/* Brand */}
           <div>
-            <a
-              href="#hero"
+            <Link
+              href={`/${locale}`}
               aria-label="Home"
               className="text-text-muted transition-colors duration-200 hover:text-text-primary"
             >
               <SLogo />
-            </a>
+            </Link>
           </div>
 
           {/* Nav links */}

@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useTranslations } from 'next-intl'
+import Link from 'next/link'
+import { useTranslations, useLocale } from 'next-intl'
 import { useScrolled } from '@/hooks/useScrolled'
 import ThemeToggle from './ThemeToggle'
 import LangToggle from './LangToggle'
@@ -79,6 +80,7 @@ export default function Navbar() {
   const downAccum = useRef(0)
   const t = useTranslations('nav')
   const tA11y = useTranslations('a11y')
+  const locale = useLocale()
 
   useEffect(() => {
     const onScroll = () => {
@@ -120,13 +122,13 @@ export default function Navbar() {
           style={navStyle}
           className="mx-auto flex h-14 max-w-6xl items-center justify-between rounded-2xl px-5"
         >
-          <a
-            href="#hero"
+          <Link
+            href={`/${locale}`}
             aria-label="Home"
             className="text-text-muted transition-colors duration-200 hover:text-text-primary"
           >
             <SLogo />
-          </a>
+          </Link>
 
           <ul className="hidden items-center gap-8 md:flex" role="list">
             {NAV_LINKS.map((key) => (

@@ -1,15 +1,17 @@
+import dynamic from 'next/dynamic'
 import { getTranslations } from 'next-intl/server'
 import Navbar from '@/components/layout/Navbar'
 import GrainOverlay from '@/components/ui/GrainOverlay'
 import ParallaxBackground from '@/components/ui/ParallaxBackground'
 import Hero from '@/components/sections/Hero'
-import About from '@/components/sections/About'
-import Skills from '@/components/sections/Skills'
-import Services from '@/components/sections/Services'
 import FeaturedProjects from '@/components/sections/FeaturedProjects'
 import OtherProjects from '@/components/sections/OtherProjects'
-import Contact from '@/components/sections/Contact'
 import Footer from '@/components/sections/Footer'
+
+const About = dynamic(() => import('@/components/sections/About'))
+const Skills = dynamic(() => import('@/components/sections/Skills'))
+const Services = dynamic(() => import('@/components/sections/Services'))
+const Contact = dynamic(() => import('@/components/sections/Contact'))
 
 export default async function HomePage() {
   const t = await getTranslations('a11y')

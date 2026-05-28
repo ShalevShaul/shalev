@@ -1,13 +1,11 @@
-'use client'
-
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import SectionWrapper from '@/components/ui/SectionWrapper'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ProjectRow from '@/components/ui/ProjectRow'
 import { projects } from '@/data/projects'
 
-export default function FeaturedProjects() {
-  const t = useTranslations('projects')
+export default async function FeaturedProjects() {
+  const t = await getTranslations('projects')
   const featured = projects.filter((p) => p.featured)
 
   return (

@@ -1,12 +1,17 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { useRef, useState, useEffect } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import SectionWrapper from '@/components/ui/SectionWrapper'
 import SectionHeader from '@/components/ui/SectionHeader'
-import { PixelatedCanvas } from '@/components/ui/PixelatedCanvas'
 import { fadeUp, staggerContainer } from '@/lib/motion'
+
+const PixelatedCanvas = dynamic(
+  () => import('@/components/ui/PixelatedCanvas').then((m) => ({ default: m.PixelatedCanvas })),
+  { ssr: false, loading: () => <div className="absolute inset-0 bg-surface-2" /> }
+)
 
 function PhotoCanvas({ reducedMotion }: { reducedMotion: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null)
