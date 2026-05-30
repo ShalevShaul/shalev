@@ -15,7 +15,7 @@ export default function SectionHeader({ id, title, subtitle }: Props) {
   const variants = prefersReduced ? {} : fadeUp
 
   return (
-    <div className="mb-16">
+    <div className="mb-8">
       <motion.h2
         id={`${id}-heading`}
         variants={variants}
@@ -24,7 +24,7 @@ export default function SectionHeader({ id, title, subtitle }: Props) {
         {title}
       </motion.h2>
       {subtitle && (
-        <motion.p variants={variants} className="mt-4 text-lg leading-[1.7] text-text-muted">
+        <motion.p variants={variants} className="mt-2 text-lg leading-[1.7] text-text-muted">
           {subtitle}
         </motion.p>
       )}
