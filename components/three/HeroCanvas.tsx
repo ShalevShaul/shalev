@@ -68,9 +68,10 @@ function LogoSphere({
   isDark: boolean
 }) {
   const svgData = useLoader(SVGLoader, '/s-logo.svg')
-  const meshRef = useRef<THREE.InstancedMesh>(null)
-  const lerped  = useRef<MousePos>({ x: 0, y: 0 })
-  const clock   = useRef(0)
+  const meshRef    = useRef<THREE.InstancedMesh>(null)
+  const lerped     = useRef<MousePos>({ x: 0, y: 0 })
+  const clock      = useRef(0)
+  const frameCount = useRef(0)
 
   /** Desktop: 220 glyphs — mobile/low-perf fallback: 80 */
   const count = reduced ? 80 : 220
@@ -165,29 +166,32 @@ function LogoSphere({
     // ── Ambient breath ────────────────────────────────────────────────────
     mesh.scale.setScalar(1 + Math.sin(clock.current * 0.38) * 0.012)
 
-    // ── Per-instance depth attenuation ───────────────────────────────────
+    // ── Per-instance depth attenuation (throttled: every 2 frames) ──────
     // Rotate each point's local position by the mesh quaternion to get its
     // current world-space Z. smoothstep maps [-1, +0.6] → [dim, bright] so
     // the front hemisphere is vivid and the rear fades to near-invisible.
     // This upload is ~2.6 KB/frame — negligible GPU bandwidth.
-    const q = mesh.quaternion
-    for (let i = 0; i < pts.length; i++) {
-      _tmpVec.copy(pts[i]).applyQuaternion(q)
-      const depth      = _tmpVec.z / SPHERE_R     // +1 = front (toward camera), -1 = rear
-      // Dark: rear fades to a slight glow (0.06) — works with additive blending on dark bg.
-      // Light: rear fades to pure zero — normal blending on light bg needs clean cutoff.
-      const brightness = isDark
-        ? 0.25 + 0.94 * THREE.MathUtils.smoothstep(depth, -0.9,   0)
-        :               THREE.MathUtils.smoothstep(depth, -0.3, 0.8)
+    frameCount.current += 1
+    if (frameCount.current % 2 === 0) {
+      const q = mesh.quaternion
+      for (let i = 0; i < pts.length; i++) {
+        _tmpVec.copy(pts[i]).applyQuaternion(q)
+        const depth      = _tmpVec.z / SPHERE_R     // +1 = front (toward camera), -1 = rear
+        // Dark: rear fades to a slight glow (0.06) — works with additive blending on dark bg.
+        // Light: rear fades to pure zero — normal blending on light bg needs clean cutoff.
+        const brightness = isDark
+          ? 0.25 + 0.94 * THREE.MathUtils.smoothstep(depth, -0.9,   0)
+          :               THREE.MathUtils.smoothstep(depth, -0.3, 0.8)
 
-      _tmpColor.setRGB(
-        colors[i * 3]     * brightness,
-        colors[i * 3 + 1] * brightness,
-        colors[i * 3 + 2] * brightness,
-      )
-      mesh.setColorAt(i, _tmpColor)
+        _tmpColor.setRGB(
+          colors[i * 3]     * brightness,
+          colors[i * 3 + 1] * brightness,
+          colors[i * 3 + 2] * brightness,
+        )
+        mesh.setColorAt(i, _tmpColor)
+      }
+      if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true
     }
-    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true
   })
 
   return (
@@ -219,8 +223,10 @@ function LogoSphere({
 
 export default function HeroCanvas() {
   const mouse             = useRef<MousePos>({ x: 0, y: 0 })
-  const [dpr, setDpr]     = useState<[number, number]>([1, 2])
+  const [dpr, setDpr]     = useState<[number, number]>([1, 1.5])
   const [reduced, setReduced] = useState(false)
+  const [inView, setInView]   = useState(true)
+  const containerRef          = useRef<HTMLDivElement>(null)
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme !== 'light'
 
@@ -233,13 +239,24 @@ export default function HeroCanvas() {
     return () => window.removeEventListener('mousemove', onMove)
   }, [])
 
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <div className="h-full w-full" aria-hidden="true">
+    <div ref={containerRef} className="h-full w-full" aria-hidden="true">
       <Canvas
         dpr={dpr}
         camera={{ position: [0, 0, 5.5], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
-        frameloop="always"
+        frameloop={inView ? 'always' : 'never'}
       >
         <PerformanceMonitor
           onDecline={() => {
