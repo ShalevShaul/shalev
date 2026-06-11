@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useReducedMotion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
@@ -9,7 +10,7 @@ import { heroStagger, fadeUp } from '@/lib/motion'
 
 const HeroCanvas = dynamic(() => import('@/components/three/HeroCanvas'), {
   ssr: false,
-  loading: () => null,
+  loading: () => <div className="h-full w-full" />,
 })
 
 function ChevronDown() {
@@ -25,6 +26,18 @@ export default function Hero() {
   const prefersReduced = useReducedMotion()
   const containerVariants = prefersReduced ? {} : heroStagger
   const itemVariants = prefersReduced ? {} : fadeUp
+
+  const [shouldLoad3D, setShouldLoad3D] = useState(false)
+
+  useEffect(() => {
+    if ('requestIdleCallback' in window) {
+      const id = requestIdleCallback(() => setShouldLoad3D(true), { timeout: 2000 })
+      return () => cancelIdleCallback(id)
+    } else {
+      const id = setTimeout(() => setShouldLoad3D(true), 200)
+      return () => clearTimeout(id)
+    }
+  }, [])
 
   return (
     <section id="hero" className="relative flex min-h-svh items-center">
@@ -71,7 +84,7 @@ export default function Hero() {
             className="h-70 sm:h-95 lg:h-130"
             aria-hidden="true"
           >
-            <HeroCanvas />
+            {shouldLoad3D ? <HeroCanvas /> : <div className="h-full w-full" />}
           </motion.div>
         </div>
       </div>
