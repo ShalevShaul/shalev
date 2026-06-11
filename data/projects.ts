@@ -6,8 +6,6 @@ export type ProjectData = {
   overview: string
   tech: string[]
   image?: string
-  imageScroll?: string
-  scrollDuration?: number
   liveUrl?: string
   githubUrl?: string
   featured: boolean
@@ -23,8 +21,6 @@ export const projects: ProjectData[] = [
       'A full-featured expense and income management app. Track transactions by date, manage recurring expenses, group by categories, and generate financial reports - income vs. expenses, category breakdowns, top 5 costs, and CSV/PDF export.',
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express.js', 'PostgreSQL'],
     image: '/projects/pare.webp',
-    imageScroll: '/projects/pare-full.webp',
-    scrollDuration: 8,
     liveUrl: 'https://pare-three.vercel.app/',
     githubUrl: 'https://github.com/ShalevShaul/PARE',
     featured: true,
@@ -38,8 +34,6 @@ export const projects: ProjectData[] = [
       'A restaurant website for Little Lemon featuring signature dishes, customer reviews, and a full table reservation flow - with booking tracking, confirmation emails, and calendar integration.',
     tech: ['React', 'TypeScript', 'Vite', 'SCSS'],
     image: '/projects/lemon.webp',
-    imageScroll: '/projects/lemo-full.webp',
-    scrollDuration: 10,
     liveUrl: 'https://little-lemon-reserve.vercel.app/',
     githubUrl: 'https://github.com/ShalevShaul/little-lemon',
     featured: true,
@@ -91,8 +85,6 @@ export const projects: ProjectData[] = [
       'Personal portfolio designed and built from scratch to reflect a creative tech director aesthetic. Combines a live 3D WebGL hero, scroll-driven animations, full EN/HE RTL bilingual support, dark/light mode, semantic accessibility, and SEO optimization.',
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
     image: '/projects/shalev.webp',
-    imageScroll: '/projects/shalev-full.webp',
-    scrollDuration: 24,
     liveUrl: 'https://shalevshaul.dev',
     githubUrl: 'https://github.com/ShalevShaul/shalev',
     featured: true,
